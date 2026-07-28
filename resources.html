@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자료실 | 아파트친구</title>
+<style>
+  :root{--bg:#FFFFFF;--card:#F7F7F8;--ink:#19191C;--ink-dim:#8B8D94;--accent:#FF5A36;--line:#EDEDEF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+  .logo{font-weight:800;font-size:18px;}
+  .back{color:var(--ink-dim);text-decoration:none;font-size:13px;}
+
+  .head{padding:28px 0 8px;}
+  .eyebrow{color:var(--accent);font-size:13px;font-weight:700;margin-bottom:8px;}
+  h1{font-size:24px;font-weight:800;}
+  .lead{color:var(--ink-dim);font-size:14px;margin-top:8px;}
+
+  .group{padding:24px 0;border-top:1px solid var(--line);}
+  .group h2{font-size:15px;font-weight:800;margin-bottom:14px;}
+  .group .stage-tag{color:var(--accent);font-size:12px;font-weight:700;}
+
+  .doc-item{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+  .doc-item .name{font-size:14px;font-weight:700;}
+  .doc-item .desc{color:var(--ink-dim);font-size:12px;margin-top:2px;}
+  .dl-btn{background:var(--accent);color:#fff;border:none;border-radius:100px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">아파트친구</div>
+      <a class="back" href="index.html">← 홈으로</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">자료실</div>
+    <h1>단계별 필요 서류를 바로 받으세요</h1>
+    <p class="lead">법무법인 제이엘이 검토한 표준 템플릿이에요. 다운로드 후 단지 상황에 맞게 수정해 사용하세요.</p>
+  </div>
+
+  <div class="group" id="stage1">
+    <div class="stage-tag">1단계 · 입예협 결성</div>
+    <h2>조직 구성 서류</h2>
+    <div class="doc-item"><div><div class="name">위임장</div><div class="desc">총회 불참 세대 의결권 위임용 — 실제 작성 가능</div></div><a href="document-center.html#poa" class="dl-btn" style="text-decoration:none;">생성하기</a></div>
+    <div class="doc-item"><div><div class="name">입예협 표준 회칙(안)</div><div class="desc">대표권·계좌관리권 명시 포함 — 실제 작성 가능</div></div><a href="document-center.html#bylaws" class="dl-btn" style="text-decoration:none;">생성하기</a></div>
+    <div class="doc-item"><div><div class="name">창립총회 소집공고문</div><div class="desc">일시·안건·의결정족수 양식 — 실제 작성 가능</div></div><a href="document-center.html#notice" class="dl-btn" style="text-decoration:none;">생성하기</a></div>
+    <div class="doc-item"><div><div class="name">임원 선출 결과 통지문</div><div class="desc">회장·부회장·감사 — 실제 작성 가능</div></div><a href="document-center.html#election" class="dl-btn" style="text-decoration:none;">생성하기</a></div>
+    <div class="doc-item"><div><div class="name">협의회 결성 통지서(시행사용)</div><div class="desc">내용증명 양식 포함 — 실제 작성 가능</div></div><a href="document-center.html#formation" class="dl-btn" style="text-decoration:none;">생성하기</a></div>
+    <div class="doc-item"><div><div class="name">개인정보 수집·이용 동의서</div><div class="desc">입주예정자 명부 관리용</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+  </div>
+
+  <div class="group" id="stage3">
+    <div class="stage-tag">3단계 · 사전점검·하자대응</div>
+    <h2>점검·협상 서류</h2>
+    <div class="doc-item"><div><div class="name">사전점검 표준 체크리스트</div><div class="desc">평형별 항목 구분</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+    <div class="doc-item"><div><div class="name">하자보수 요청 공문</div><div class="desc">시공사 발송용</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+    <div class="doc-item"><div><div class="name">하자보수 미이행 내용증명</div><div class="desc">기한 명시 양식 — 실제 작성 가능</div></div><a href="tools.html#content-cert" class="dl-btn" style="text-decoration:none;">생성하기</a></div>
+  </div>
+
+  <div class="group" id="stage4">
+    <div class="stage-tag">4단계 · 준공·인수인계</div>
+    <h2>인수인계 서류</h2>
+    <div class="doc-item"><div><div class="name">공용부 인수인계서</div><div class="desc">관리주체 지정 전 임시관리용</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+    <div class="doc-item"><div><div class="name">장기수선계획 검토 체크시트</div><div class="desc">시공사 제출본 대조용</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+  </div>
+
+  <div class="group" id="stage5">
+    <div class="stage-tag">5단계 · 입대의 구성</div>
+    <h2>구성·운영 서류</h2>
+    <div class="doc-item"><div><div class="name">선거관리위원회 구성 규정</div><div class="desc">500세대 이상 필수</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+    <div class="doc-item"><div><div class="name">동별대표자 선출 공고문</div><div class="desc">입후보·투표 절차 포함</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+    <div class="doc-item"><div><div class="name">관리규약(안) 표준안</div><div class="desc">서면동의서 양식 포함</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+    <div class="doc-item"><div><div class="name">위탁관리업체 입찰공고문</div><div class="desc">적격심사 기준표 포함</div></div><button class="dl-btn" onclick="alert('다운로드 (데모)')">다운로드</button></div>
+  </div>
+</div>
+
+</body>
+</html>

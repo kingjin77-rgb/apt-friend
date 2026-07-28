@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>글쓰기 | 아파트친구</title>
+<style>
+  :root{--bg:#FFFFFF;--card:#F7F7F8;--ink:#19191C;--ink-dim:#8B8D94;--accent:#FF5A36;--line:#EDEDEF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 24px;}
+  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+  .logo{font-weight:800;font-size:18px;}
+  .back{color:var(--ink-dim);text-decoration:none;font-size:13px;}
+
+  .form-wrap{padding:28px 0 60px;}
+  .cat-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+  .cat-chip{border:1px solid var(--line);background:var(--bg);color:var(--ink-dim);padding:8px 14px;border-radius:100px;font-size:13px;cursor:pointer;}
+  .cat-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  label{font-size:13px;color:var(--ink-dim);display:block;margin:16px 0 6px;}
+  input[type=text],textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:14px;color:var(--ink);font-family:inherit;}
+  textarea{min-height:180px;resize:vertical;}
+  .attach-row{display:flex;gap:8px;margin-top:10px;}
+  .attach-btn{border:1px dashed var(--line);border-radius:10px;padding:10px 16px;font-size:12px;color:var(--ink-dim);background:none;cursor:pointer;}
+  .submit-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:14px;font-weight:800;font-size:15px;margin-top:24px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">아파트친구</div>
+      <a class="back" href="community.html">취소</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="form-wrap">
+    <label>게시판 선택</label>
+    <div class="cat-row">
+      <button class="cat-chip active" data-cat="질문게시판">질문게시판</button>
+      <button class="cat-chip" data-cat="사례게시판">사례게시판</button>
+      <button class="cat-chip" data-cat="자유게시판">자유게시판</button>
+    </div>
+
+    <label>제목</label>
+    <input type="text" id="title" placeholder="제목을 입력해주세요">
+
+    <label>내용</label>
+    <textarea id="body" placeholder="궁금한 점이나 공유하고 싶은 내용을 자세히 적어주세요"></textarea>
+
+    <div class="attach-row">
+      <button class="attach-btn">📎 사진 첨부</button>
+      <button class="attach-btn">📄 파일 첨부</button>
+    </div>
+
+    <button class="submit-btn" onclick="submitPost()">등록하기</button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.cat-chip').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.cat-chip').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+function submitPost(){
+  if(!document.getElementById('title').value.trim()){
+    alert('제목을 입력해주세요'); return;
+  }
+  alert('게시글이 등록되었습니다 (데모)');
+  window.location.href = 'post-detail.html';
+}
+</script>
+
+</body>
+</html>

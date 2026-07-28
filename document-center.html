@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공문서 자동생성센터 | 아파트친구</title>
+<style>
+  :root{--bg:#FFFFFF;--card:#F7F7F8;--ink:#19191C;--ink-dim:#8B8D94;--accent:#FF5A36;--line:#EDEDEF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+  .logo{font-weight:800;font-size:18px;}
+  .back{color:var(--ink-dim);text-decoration:none;font-size:13px;}
+
+  .head{padding:28px 0 8px;}
+  .eyebrow{color:var(--accent);font-size:13px;font-weight:700;margin-bottom:8px;}
+  h1{font-size:24px;font-weight:800;}
+  .lead{color:var(--ink-dim);font-size:14px;margin-top:8px;}
+
+  .doc-nav{display:flex;gap:8px;padding:20px 0;flex-wrap:wrap;border-bottom:1px solid var(--line);position:sticky;top:65px;background:#fff;z-index:9;}
+  .doc-nav a{border:1px solid var(--line);color:var(--ink-dim);padding:7px 14px;border-radius:100px;font-size:12px;text-decoration:none;}
+  .doc-nav a:hover{border-color:var(--accent);color:var(--accent);}
+
+  .doc-section{padding:30px 0;border-bottom:1px solid var(--line);}
+  .doc-section h2{font-size:17px;font-weight:800;margin-bottom:4px;}
+  .doc-section .desc{color:var(--ink-dim);font-size:13px;margin-bottom:18px;}
+
+  label{font-size:12px;color:var(--ink-dim);display:block;margin:10px 0 5px;}
+  input,textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:13px;color:var(--ink);font-family:inherit;}
+  textarea{min-height:70px;resize:vertical;}
+  .row2{display:flex;gap:10px;}
+  .row2>div{flex:1;}
+  .add-row-btn{background:none;border:1px dashed var(--line);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--ink-dim);cursor:pointer;margin-top:6px;}
+  .gen-btn{background:var(--accent);color:#fff;border:none;border-radius:100px;padding:12px 24px;font-weight:700;font-size:13px;margin-top:16px;cursor:pointer;}
+  .agenda-item{display:flex;gap:6px;margin-top:6px;}
+  .agenda-item input{flex:1;}
+  .done-note{color:var(--accent);font-size:12px;margin-top:10px;display:none;}
+  .done-note.show{display:block;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">아파트친구</div>
+      <a class="back" href="lifecycle-guide.html">← 로드맵으로</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">공문서 자동생성센터</div>
+    <h1>입력만 하면 바로 완성돼요</h1>
+    <p class="lead">아래 정보를 채우고 '생성하기'를 누르면 실제 문서(.doc)가 다운로드됩니다. 다운로드 후 워드/한글에서 열어 서명·발송하시면 돼요.</p>
+  </div>
+
+  <div class="doc-nav">
+    <a href="#poa">위임장</a>
+    <a href="#bylaws">회칙</a>
+    <a href="#notice">소집공고문</a>
+    <a href="#formation">결성통지서</a>
+    <a href="#election">임원선출결과</a>
+  </div>
+
+  <!-- 위임장 -->
+  <div class="doc-section" id="poa">
+    <h2>📝 위임장 (문서 다운로드)</h2>
+    <div class="desc">총회에 직접 참석하지 못하는 세대의 의결권을 다른 사람에게 위임할 때 사용해요</div>
+    <p style="font-size:12px;margin-bottom:12px;"><a href="poa-system.html" style="color:var(--accent);font-weight:700;">→ 전자서명으로 바로 접수하고 실시간 접수율까지 보려면 위임장 접수 시스템 사용하기</a></p>
+    <label>단지명</label><input id="poa-complex" placeholder="예: OO아파트">
+    <div class="row2">
+      <div><label>총회 종류</label><input id="poa-meeting" placeholder="예: 창립총회" value="창립총회"></div>
+      <div><label>총회 일자</label><input id="poa-date" type="date"></div>
+    </div>
+    <div class="row2">
+      <div><label>위임자(본인) 성명</label><input id="poa-from-name"></div>
+      <div><label>위임자 동호수</label><input id="poa-from-unit" placeholder="예: 101동 1004호"></div>
+    </div>
+    <div class="row2">
+      <div><label>수임자(대리인) 성명</label><input id="poa-to-name"></div>
+      <div><label>수임자와의 관계</label><input id="poa-to-rel" placeholder="예: 배우자, 세대원, 이웃 등"></div>
+    </div>
+    <button class="gen-btn" onclick="genPOA()">위임장 생성하기</button>
+    <div class="done-note" id="poa-done">✓ 다운로드 완료 — 인쇄 후 위임자 서명(인) 받아 총회 당일 접수처에 제출하세요</div>
+  </div>
+
+  <!-- 회칙 -->
+  <div class="doc-section" id="bylaws">
+    <h2>📘 회칙</h2>
+    <div class="desc">입주예정자협의회 표준 회칙을 단지 정보에 맞게 자동 완성해요</div>
+    <div class="row2">
+      <div><label>단지명</label><input id="by-complex" placeholder="예: OO아파트"></div>
+      <div><label>소재지</label><input id="by-address" placeholder="예: OO시 OO구 OO로 123"></div>
+    </div>
+    <div class="row2">
+      <div><label>총 세대수</label><input id="by-units" type="number" placeholder="예: 1200"></div>
+      <div><label>임원 임기(년)</label><input id="by-term" type="number" value="1"></div>
+    </div>
+    <button class="gen-btn" onclick="genBylaws()">회칙 생성하기</button>
+    <div class="done-note" id="by-done">✓ 다운로드 완료 — 창립총회에서 축조 낭독 후 의결하시면 돼요</div>
+  </div>
+
+  <!-- 소집공고문 -->
+  <div class="doc-section" id="notice">
+    <h2>📢 창립총회 소집공고문</h2>
+    <div class="desc">총회 일시·장소·안건을 입력하면 공고문이 자동 완성돼요</div>
+    <div class="row2">
+      <div><label>단지명</label><input id="no-complex"></div>
+      <div><label>공고일</label><input id="no-noticedate" type="date"></div>
+    </div>
+    <div class="row2">
+      <div><label>총회 일시</label><input id="no-date" placeholder="예: 2026년 8월 15일 오후 2시"></div>
+      <div><label>장소</label><input id="no-place" placeholder="예: OO아파트 관리동 2층 커뮤니티실"></div>
+    </div>
+    <label>안건</label>
+    <div id="agenda-list">
+      <div class="agenda-item"><input placeholder="1. 개회 및 성원보고"></div>
+      <div class="agenda-item"><input placeholder="2. 회칙(안) 심의·의결"></div>
+      <div class="agenda-item"><input placeholder="3. 임원(회장·부회장·감사) 선출"></div>
+    </div>
+    <button class="add-row-btn" onclick="addAgenda()">+ 안건 추가</button><br>
+    <button class="gen-btn" onclick="genNotice()">소집공고문 생성하기</button>
+    <div class="done-note" id="no-done">✓ 다운로드 완료 — 단지 게시판·커뮤니티방에 공유하세요</div>
+  </div>
+
+  <!-- 결성통지서 -->
+  <div class="doc-section" id="formation">
+    <h2>✉️ 협의회 결성 통지서 (내용증명)</h2>
+    <div class="desc">시행사·시공사에 협의회 결성 사실과 대표자를 공식 통지해요</div>
+    <div class="row2">
+      <div><label>수신인 (시행사/시공사명)</label><input id="fm-to" placeholder="예: OO건설 주식회사"></div>
+      <div><label>발신인 (협의회명)</label><input id="fm-from" placeholder="예: OO아파트 입주예정자협의회"></div>
+    </div>
+    <div class="row2">
+      <div><label>대표자(회장) 성명</label><input id="fm-chair"></div>
+      <div><label>결성일</label><input id="fm-date" type="date"></div>
+    </div>
+    <button class="gen-btn" onclick="genFormation()">결성통지서 생성하기</button>
+    <div class="done-note" id="fm-done">✓ 다운로드 완료 — 우체국 내용증명으로 발송하세요</div>
+  </div>
+
+  <!-- 임원선출결과 -->
+  <div class="doc-section" id="election">
+    <h2>🗳️ 임원 선출 결과 통지문</h2>
+    <div class="desc">총회에서 선출된 임원 명단을 정리한 공문이에요</div>
+    <div class="row2">
+      <div><label>단지명</label><input id="el-complex"></div>
+      <div><label>선출일</label><input id="el-date" type="date"></div>
+    </div>
+    <div class="row2">
+      <div><label>회장</label><input id="el-chair"></div>
+      <div><label>부회장</label><input id="el-vice"></div>
+    </div>
+    <label>감사</label><input id="el-audit">
+    <button class="gen-btn" onclick="genElection()">임원선출결과 생성하기</button>
+    <div class="done-note" id="el-done">✓ 다운로드 완료</div>
+  </div>
+
+  <div style="height:30px;"></div>
+</div>
+
+<script>
+function downloadDoc(filename, bodyHtml){
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'><title>${filename}</title></head>
+  <body style="font-family:'맑은 고딕',sans-serif;font-size:11pt;line-height:1.9;padding:40px;">${bodyHtml}</body></html>`;
+  const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename + '.doc';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function v(id){ return document.getElementById(id).value || `(${id} 미입력)`; }
+function showDone(id){ document.getElementById(id).classList.add('show'); }
+
+function genPOA(){
+  const html = `
+  <h2 style="text-align:center;">위&nbsp;&nbsp;임&nbsp;&nbsp;장</h2>
+  <p>${v('poa-complex')} 입주예정자협의회 ${v('poa-meeting')} 관련하여 아래와 같이 의결권 행사를 위임합니다.</p>
+  <table style="width:100%;border-collapse:collapse;margin-top:16px;" border="1" cellpadding="8">
+    <tr><td width="25%"><b>위임자(본인)</b></td><td>성명: ${v('poa-from-name')}</td><td>동호수: ${v('poa-from-unit')}</td></tr>
+    <tr><td><b>수임자(대리인)</b></td><td>성명: ${v('poa-to-name')}</td><td>관계: ${v('poa-to-rel')}</td></tr>
+  </table>
+  <p style="margin-top:20px;"><b>위임 사항</b><br>
+  1. 개회 및 성원보고에 관한 사항<br>
+  2. 임원 선출에 관한 사항<br>
+  3. 회칙 제정에 관한 사항<br>
+  4. 기타 총회 부의 안건 전체에 대한 의결권 행사</p>
+  <p style="margin-top:20px;">본인은 위 수임자에게 ${v('poa-date')}에 개최되는 ${v('poa-complex')} 입주예정자협의회 ${v('poa-meeting')}의 참석 및 의결권 행사에 관한 일체의 권한을 위임함을 확인합니다.</p>
+  <p style="margin-top:40px;">위임자: ${v('poa-from-name')} &nbsp;&nbsp;(서명 또는 인)</p>`;
+  downloadDoc('위임장_'+v('poa-from-name'), html);
+  showDone('poa-done');
+}
+
+function genBylaws(){
+  const html = `
+  <h2 style="text-align:center;">${v('by-complex')} 입주예정자협의회 회칙</h2>
+  <p><b>제1장 총칙</b></p>
+  <p>제1조(명칭) 본 협의회는 "${v('by-complex')} 입주예정자협의회"(이하 "협의회")라 한다.<br>
+  제2조(소재지) 협의회의 소재지는 ${v('by-address')}로 한다.<br>
+  제3조(목적) 협의회는 ${v('by-complex')}(총 ${v('by-units')}세대) 입주예정자의 권익 보호와 원활한 입주 준비를 목적으로 한다.</p>
+  <p><b>제2장 회원</b></p>
+  <p>제4조(회원자격) 협의회의 회원은 ${v('by-complex')} 세대의 분양계약자로 한다.<br>
+  제5조(권리와 의무) 회원은 총회 참석 및 의결권을 가지며, 회칙 및 총회 결의사항을 준수할 의무를 진다.</p>
+  <p><b>제3장 임원</b></p>
+  <p>제6조(임원의 종류) 협의회에 회장 1인, 부회장 약간 명, 감사 1인을 둔다.<br>
+  제7조(임기) 임원의 임기는 ${v('by-term')}년으로 하며, 연임할 수 있다.<br>
+  제8조(직무) 회장은 협의회를 대표하고 업무를 총괄하며, 부회장은 회장을 보좌하고, 감사는 협의회의 회계 및 업무 전반을 감사한다.</p>
+  <p><b>제4장 총회</b></p>
+  <p>제9조(총회) 총회는 정기총회와 임시총회로 구분하며, 재적회원 과반수의 출석(위임장 포함)으로 성립한다.<br>
+  제10조(의결) 총회의 의결은 출석회원 과반수의 찬성으로 한다.</p>
+  <p><b>제5장 재정</b></p>
+  <p>제11조(재원) 협의회의 재정은 회비 및 기타 수입으로 충당한다.<br>
+  제12조(회계연도) 협의회의 회계연도는 매년 1월 1일부터 12월 31일까지로 한다.</p>
+  <p style="margin-top:30px;">부칙<br>본 회칙은 ${v('by-complex')} 입주예정자협의회 창립총회 의결일로부터 시행한다.</p>`;
+  downloadDoc(v('by-complex')+'_입예협_회칙', html);
+  showDone('by-done');
+}
+
+function genNotice(){
+  const agendaInputs = document.querySelectorAll('#agenda-list input');
+  let agendaHtml = '';
+  agendaInputs.forEach(inp=>{
+    if(inp.value.trim()) agendaHtml += inp.value + '<br>';
+  });
+  if(!agendaHtml) agendaHtml = '(안건 미입력)';
+  const html = `
+  <h2 style="text-align:center;">${v('no-complex')} 입주예정자협의회 창립총회 소집공고</h2>
+  <p>회원 여러분의 가정에 행복이 가득하시기를 기원합니다.<br>
+  아래와 같이 ${v('no-complex')} 입주예정자협의회 창립총회를 개최하오니 회원 여러분의 많은 참석 바랍니다.</p>
+  <table style="width:100%;border-collapse:collapse;margin-top:16px;" border="1" cellpadding="8">
+    <tr><td width="20%"><b>일&nbsp;&nbsp;시</b></td><td>${v('no-date')}</td></tr>
+    <tr><td><b>장&nbsp;&nbsp;소</b></td><td>${v('no-place')}</td></tr>
+  </table>
+  <p style="margin-top:20px;"><b>안건</b><br>${agendaHtml}</p>
+  <p style="margin-top:20px;">※ 부득이하게 참석이 어려운 경우 위임장을 통해 의결권을 행사하실 수 있습니다.</p>
+  <p style="margin-top:30px;text-align:right;">${v('no-noticedate')}<br>${v('no-complex')} 입주예정자협의회(발기인 일동)</p>`;
+  downloadDoc(v('no-complex')+'_창립총회_소집공고문', html);
+  showDone('no-done');
+}
+
+function genFormation(){
+  const html = `
+  <h2 style="text-align:center;">내&nbsp;&nbsp;용&nbsp;&nbsp;증&nbsp;&nbsp;명</h2>
+  <p>수신: ${v('fm-to')}<br>발신: ${v('fm-from')}<br>작성일: ${v('fm-date')}</p>
+  <p style="margin-top:20px;"><b>제목: 입주예정자협의회 결성 통지의 건</b></p>
+  <p style="margin-top:16px;">1. 귀사의 무궁한 발전을 기원합니다.<br>
+  2. 본 통지서는 ${v('fm-from')}이 ${v('fm-date')}부로 정식 결성되었음을 알려드리기 위함입니다.<br>
+  3. 본 협의회의 대표자는 ${v('fm-chair')}이며, 향후 사전점검, 하자보수, 계약 관련 사항에 대해 본 협의회를 입주예정자의 공식 창구로 인정하여 주시기 바랍니다.<br>
+  4. 협의회 관련 공식 연락은 대표자 ${v('fm-chair')} 앞으로 진행하여 주시기 바랍니다.</p>
+  <p style="margin-top:30px;text-align:right;">${v('fm-from')}<br>대표자 ${v('fm-chair')} (인)</p>`;
+  downloadDoc('협의회결성통지서_'+v('fm-from'), html);
+  showDone('fm-done');
+}
+
+function genElection(){
+  const html = `
+  <h2 style="text-align:center;">${v('el-complex')} 입주예정자협의회 임원 선출 결과</h2>
+  <p>${v('el-date')} 개최된 창립총회에서 아래와 같이 임원이 선출되었음을 알려드립니다.</p>
+  <table style="width:100%;border-collapse:collapse;margin-top:16px;" border="1" cellpadding="8">
+    <tr><td width="30%"><b>회장</b></td><td>${v('el-chair')}</td></tr>
+    <tr><td><b>부회장</b></td><td>${v('el-vice')}</td></tr>
+    <tr><td><b>감사</b></td><td>${v('el-audit')}</td></tr>
+  </table>
+  <p style="margin-top:30px;text-align:right;">${v('el-complex')} 입주예정자협의회</p>`;
+  downloadDoc(v('el-complex')+'_임원선출결과', html);
+  showDone('el-done');
+}
+
+function addAgenda(){
+  const div = document.createElement('div');
+  div.className = 'agenda-item';
+  div.innerHTML = '<input placeholder="안건을 입력하세요">';
+  document.getElementById('agenda-list').appendChild(div);
+}
+</script>
+
+</body>
+</html>

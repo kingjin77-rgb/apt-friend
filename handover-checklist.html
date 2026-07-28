@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인계 체크리스트 | 아파트친구</title>
+<style>
+  :root{--bg:#FFFFFF;--card:#F7F7F8;--ink:#19191C;--ink-dim:#8B8D94;--accent:#FF5A36;--line:#EDEDEF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 24px;}
+  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+  .logo{font-weight:800;font-size:18px;}
+  .back{color:var(--ink-dim);text-decoration:none;font-size:13px;}
+
+  .head{padding:28px 0 8px;}
+  .eyebrow{color:var(--accent);font-size:13px;font-weight:700;margin-bottom:8px;}
+  h1{font-size:24px;font-weight:800;}
+  .lead{color:var(--ink-dim);font-size:14px;margin-top:8px;}
+
+  .cat{padding:22px 0;border-top:1px solid var(--line);}
+  .cat h2{font-size:14px;font-weight:800;margin-bottom:12px;color:var(--ink-dim);}
+  .item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .item:last-child{border-bottom:none;}
+  .item input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent);flex-shrink:0;}
+  .item .name{font-size:14px;font-weight:700;}
+  .item .desc{font-size:12px;color:var(--ink-dim);margin-top:2px;}
+  .item.checked .name{text-decoration:line-through;color:var(--ink-dim);}
+
+  .summary{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:24px 0;text-align:center;}
+  .summary .big{font-size:22px;font-weight:800;color:var(--accent);}
+
+  .export-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:14px;font-weight:800;font-size:15px;margin:0 0 40px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">아파트친구</div>
+      <a class="back" href="lifecycle-guide.html">← 로드맵으로</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">6단계 · 인계</div>
+    <h1>입예협 → 입대의 인계 체크리스트</h1>
+    <p class="lead">협의회 임기 동안의 기록을 빠짐없이 새 입주자대표회의에 넘기세요</p>
+  </div>
+
+  <div class="summary">
+    <div class="big" id="progress-text">0 / 12 완료</div>
+    <div style="color:var(--ink-dim);font-size:12px;margin-top:4px;">체크할수록 인계 준비율이 올라가요</div>
+  </div>
+
+  <div class="cat">
+    <h2>조직 서류</h2>
+    <div class="item"><input type="checkbox"><div><div class="name">입예협 회칙 원본</div><div class="desc">개정 이력 포함</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">임원 명단 및 임기 기록</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">총회 회의록 전체</div><div class="desc">창립총회~해산(예정)총회</div></div></div>
+  </div>
+
+  <div class="cat">
+    <h2>재정 서류</h2>
+    <div class="item"><input type="checkbox"><div><div class="name">협의회 회계장부</div><div class="desc">수입·지출 내역 전체</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">통장 및 잔액 인계</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">미정산 채권·채무 목록</div></div></div>
+  </div>
+
+  <div class="cat">
+    <h2>시공사 협상 기록</h2>
+    <div class="item"><input type="checkbox"><div><div class="name">하자보수 요청·답변 이력 전체</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">미해결 하자 리스트</div><div class="desc">담보책임기간 만료일 포함</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">시공사와의 합의서·내용증명 사본</div></div></div>
+  </div>
+
+  <div class="cat">
+    <h2>단지 운영 기초자료</h2>
+    <div class="item"><input type="checkbox"><div><div class="name">장기수선계획 원안 및 검토의견</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">공용부 인수인계서</div></div></div>
+    <div class="item"><input type="checkbox"><div><div class="name">입주민 명부 및 동의서 원본</div></div></div>
+  </div>
+
+  <button class="export-btn" onclick="alert('인계확인서 PDF 생성 (데모)')">인계확인서 생성하기</button>
+</div>
+
+<script>
+const items = document.querySelectorAll('.item input[type=checkbox]');
+items.forEach(cb=>{
+  cb.addEventListener('change', ()=>{
+    cb.closest('.item').classList.toggle('checked', cb.checked);
+    const done = document.querySelectorAll('.item input:checked').length;
+    document.getElementById('progress-text').textContent = `${done} / ${items.length} 완료`;
+  });
+});
+</script>
+
+</body>
+</html>

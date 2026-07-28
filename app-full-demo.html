@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아파트친구 - 전체 앱 데모</title>
+<style>
+  :root{--bg:#FFFFFF;--card:#F7F7F8;--ink:#19191C;--ink-dim:#8B8D94;--accent:#FF5A36;--line:#EDEDEF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#F5F5F7;color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;
+       min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px;}
+
+  .phone{width:320px;height:660px;background:var(--bg);border-radius:38px;border:8px solid #1c1f1c;
+         position:relative;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;background:#1c1f1c;border-radius:0 0 14px 14px;z-index:20;}
+
+  .screen{flex:1;display:none;flex-direction:column;overflow:hidden;}
+  .screen.active{display:flex;}
+  .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+
+  /* 공통 상단바 */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 10px;border-bottom:1px solid var(--line);flex-shrink:0;}
+  .topbar .t-title{font-weight:800;font-size:15px;}
+  .topbar .t-back{color:var(--ink-dim);font-size:13px;cursor:pointer;background:none;border:none;}
+  .topbar .t-action{color:var(--accent);font-size:13px;font-weight:700;cursor:pointer;background:none;border:none;}
+
+  /* 하단 탭바 */
+  .tabbar{display:flex;border-top:1px solid var(--line);flex-shrink:0;background:#fff;}
+  .tab-item{flex:1;text-align:center;padding:10px 0 14px;font-size:10px;color:var(--ink-dim);cursor:pointer;background:none;border:none;}
+  .tab-item .ic{font-size:18px;display:block;margin-bottom:2px;}
+  .tab-item.active{color:var(--accent);font-weight:700;}
+
+  /* ===== 온보딩 ===== */
+  #ob1{padding:0;justify-content:flex-end;}
+  #ob1 .photo{position:absolute;top:0;left:0;right:0;height:56%;background:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=70') center/cover;}
+  #ob1 .sheet{position:relative;z-index:2;background:var(--bg);border-radius:24px 24px 0 0;margin-top:50%;padding:26px 20px 24px;flex:1;display:flex;flex-direction:column;box-shadow:0 -8px 24px rgba(0,0,0,.06);}
+  #ob1 h1{font-size:19px;font-weight:800;line-height:1.4;margin-bottom:16px;}
+  .badge-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:18px;}
+  .badge-card .brand{font-weight:800;font-size:14px;margin-bottom:4px;}
+  .badge-card .desc{color:var(--ink-dim);font-size:11px;}
+  .kakao-btn{background:#FEE500;color:#191919;border:none;border-radius:100px;padding:13px;font-weight:800;font-size:14px;width:100%;cursor:pointer;margin-top:auto;}
+
+  #ob2{justify-content:center;padding:0 20px;text-align:center;}
+  #ob2 h1{font-size:18px;font-weight:800;line-height:1.4;margin-bottom:22px;}
+  .code-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:left;}
+  .code-box p{color:var(--ink-dim);font-size:13px;margin-bottom:12px;}
+  .code-box input{width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px;color:var(--ink);font-size:14px;text-align:center;letter-spacing:.15em;}
+  .primary-btn{background:var(--accent);color:#fff;border:none;border-radius:100px;padding:13px;font-weight:800;font-size:14px;width:100%;cursor:pointer;margin-top:20px;}
+
+  #ob3{padding:22px 20px;}
+  #ob3 h1{font-size:17px;font-weight:800;margin-bottom:16px;}
+  .lawyer-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;}
+  .lawyer-row{display:flex;align-items:center;gap:12px;}
+  .avatar-sm{width:40px;height:40px;border-radius:100px;background:#333;flex-shrink:0;}
+  .lawyer-name{font-weight:700;font-size:14px;}
+  .lawyer-tag{color:var(--ink-dim);font-size:11px;margin-top:2px;}
+
+  /* ===== 커뮤니티 리스트 ===== */
+  .board-tabs{display:flex;gap:6px;padding:12px 14px;overflow-x:auto;flex-shrink:0;}
+  .board-tab{border:1px solid var(--line);background:none;color:var(--ink-dim);padding:6px 12px;border-radius:100px;font-size:11px;white-space:nowrap;cursor:pointer;}
+  .board-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .post{display:block;padding:14px 18px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;cursor:pointer;}
+  .post .cat{color:var(--accent);font-size:10px;font-weight:700;margin-bottom:3px;}
+  .post .title{font-size:13px;font-weight:700;margin-bottom:3px;line-height:1.4;}
+  .post .meta{color:var(--ink-dim);font-size:10px;}
+  .fab{position:absolute;right:16px;bottom:70px;background:var(--accent);color:#fff;border:none;border-radius:100px;width:44px;height:44px;font-size:18px;box-shadow:0 6px 16px rgba(255,90,54,.4);cursor:pointer;z-index:10;}
+
+  /* ===== 게시글 상세 ===== */
+  .post-detail-body{padding:16px 18px;}
+  .post-detail-body h2{font-size:16px;font-weight:800;line-height:1.4;margin-bottom:8px;}
+  .post-detail-body .cat{color:var(--accent);font-size:11px;font-weight:700;margin-bottom:8px;}
+  .post-detail-body .meta{color:var(--ink-dim);font-size:11px;margin-bottom:14px;}
+  .post-detail-body .content{font-size:13px;line-height:1.7;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px;}
+  .answer{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;}
+  .answer .who{font-size:12px;font-weight:700;margin-bottom:4px;}
+  .answer .badge-mini{display:inline-block;background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:5px;}
+  .answer .txt{font-size:12px;line-height:1.6;}
+
+  /* ===== 글쓰기 ===== */
+  .write-body{padding:16px 18px;}
+  .cat-chip-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+  .cat-chip{border:1px solid var(--line);background:none;color:var(--ink-dim);padding:6px 12px;border-radius:100px;font-size:11px;cursor:pointer;}
+  .cat-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .write-body input,.write-body textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:13px;color:var(--ink);font-family:inherit;margin-bottom:10px;}
+  .write-body textarea{min-height:120px;resize:vertical;}
+
+  /* ===== 로드맵 ===== */
+  .roadmap-body{padding:14px 18px;}
+  .progress-bar{background:var(--card);border-radius:100px;height:6px;margin:8px 0 14px;overflow:hidden;}
+  .progress-fill{background:var(--accent);height:100%;border-radius:100px;}
+  .stage-mini{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+  .stage-mini.done{border-color:var(--accent);background:rgba(255,90,54,.04);}
+  .stage-mini-head{display:flex;align-items:center;gap:10px;}
+  .stage-num-mini{width:22px;height:22px;border-radius:100px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+  .stage-mini.done .stage-num-mini{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .stage-mini-title{font-size:12px;font-weight:700;}
+  .stage-mini-when{font-size:10px;color:var(--ink-dim);}
+  .stage-mini input{accent-color:var(--accent);}
+  .mini-task{display:flex;gap:6px;align-items:center;font-size:11px;padding:5px 0 5px 32px;}
+
+  /* ===== 컨시어지 ===== */
+  .concierge-body{padding:16px 18px;}
+  .field-grid-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0;}
+  .field-card-mini{border:1px solid var(--line);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;background:var(--card);}
+  .field-card-mini.active{border-color:var(--accent);background:rgba(255,90,54,.06);}
+  .field-card-mini .ico{font-size:20px;margin-bottom:4px;}
+  .field-card-mini .name{font-weight:700;font-size:12px;}
+
+  /* ===== 마이페이지 ===== */
+  .my-body{padding:16px 18px;}
+  .profile-row{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:14px;}
+  .avatar-lg{width:44px;height:44px;border-radius:100px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;}
+  .p-name{font-weight:800;font-size:14px;}
+  .p-unit{color:var(--ink-dim);font-size:11px;margin-top:2px;}
+  .verified-mini{display:inline-block;background:rgba(255,90,54,.1);color:var(--accent);font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:4px;}
+  .menu-mini{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px;cursor:pointer;}
+  .logout-mini{width:100%;border:1px solid var(--line);background:none;border-radius:100px;padding:11px;font-size:12px;color:var(--ink-dim);margin-top:18px;cursor:pointer;}
+
+  .dots-outer{margin-top:14px;text-align:center;}
+  .dots{display:flex;justify-content:center;gap:6px;margin-bottom:8px;}
+  .dot{width:6px;height:6px;border-radius:100px;background:#D8D8DB;}
+  .dot.on{background:var(--accent);width:16px;}
+  .caption{color:#8B8D94;font-size:11px;}
+</style>
+</head>
+<body>
+
+<div>
+<div class="phone">
+  <div class="notch"></div>
+
+  <!-- ============ 온보딩 1 ============ -->
+  <div class="screen active" id="ob1">
+    <div class="photo"></div>
+    <div class="sheet">
+      <h1>아파트 생활 고민,<br>내 손안에 해결</h1>
+      <div class="badge-card">
+        <div class="brand">아파트친구</div>
+        <div class="desc">법률·교육·세무·회계 전문 프리미엄 컨시어지</div>
+      </div>
+      <button class="kakao-btn" onclick="go('ob2')">카카오로 시작하기</button>
+    </div>
+  </div>
+
+  <!-- ============ 온보딩 2 ============ -->
+  <div class="screen" id="ob2">
+    <h1>입주민 인증코드로<br>간편 접속!</h1>
+    <div class="code-box">
+      <p>안녕하세요<br>초대받은 인증코드를 입력해주세요</p>
+      <input type="text" value="APT-2026-9931">
+    </div>
+    <button class="primary-btn" onclick="go('ob3')">입력하기</button>
+  </div>
+
+  <!-- ============ 온보딩 3 ============ -->
+  <div class="screen" id="ob3">
+    <h1>어떠한 상담도 OK,<br>입주민과 연결!</h1>
+    <div class="lawyer-card">
+      <div style="color:var(--accent);font-size:11px;font-weight:700;margin-bottom:8px;">OO아파트 · 202동 101호 김황희님</div>
+      <div class="lawyer-row">
+        <div class="avatar-sm"></div>
+        <div>
+          <div class="lawyer-name">담당 변호사 배정 완료</div>
+          <div class="lawyer-tag">✓ 이지훈 변호사 · 법무법인 제이엘</div>
+        </div>
+      </div>
+    </div>
+    <button class="primary-btn" style="margin-top:0;" onclick="go('home-community')">앱 시작하기</button>
+  </div>
+
+  <!-- ============ 홈: 커뮤니티 ============ -->
+  <div class="screen" id="home-community" style="position:relative;">
+    <div class="topbar"><div class="t-title">커뮤니티</div><div class="t-action" onclick="go('mypage')">회 ●</div></div>
+    <div class="board-tabs">
+      <button class="board-tab active">전체</button>
+      <button class="board-tab">질문게시판</button>
+      <button class="board-tab">사례게시판</button>
+      <button class="board-tab">공지</button>
+    </div>
+    <div class="scroll">
+      <a class="post" onclick="go('post-detail')">
+        <div class="cat">질문게시판</div>
+        <div class="title">장기수선충당금으로 승강기 전면 교체가 가능한가요?</div>
+        <div class="meta">□□아파트 회장 · 2시간 전 · 답변 3</div>
+      </a>
+      <a class="post" onclick="go('post-detail')">
+        <div class="cat">사례게시판</div>
+        <div class="title">경비용역 재계약 시 감사 지적받은 부분 공유합니다</div>
+        <div class="meta">△△아파트 회장 · 5시간 전 · 답변 7</div>
+      </a>
+      <a class="post" onclick="go('post-detail')">
+        <div class="cat">공지사항</div>
+        <div class="title">7월 변호사 서면 자문 마감일 안내</div>
+        <div class="meta">운영진 · 1일 전 · 답변 0</div>
+      </a>
+      <a class="post" onclick="go('post-detail')">
+        <div class="cat">질문게시판</div>
+        <div class="title">동대표 정족수 미달 시 재공고 절차 문의드립니다</div>
+        <div class="meta">◇◇아파트 회장 · 1일 전 · 답변 5</div>
+      </a>
+    </div>
+    <button class="fab" onclick="go('write-post')">✎</button>
+    <div class="tabbar">
+      <button class="tab-item active" data-tab="home-community" onclick="go('home-community')"><span class="ic">💬</span>커뮤니티</button>
+      <button class="tab-item" data-tab="roadmap" onclick="go('roadmap')"><span class="ic">🗺️</span>로드맵</button>
+      <button class="tab-item" data-tab="concierge" onclick="go('concierge')"><span class="ic">🤝</span>컨시어지</button>
+      <button class="tab-item" data-tab="mypage" onclick="go('mypage')"><span class="ic">👤</span>마이</button>
+    </div>
+  </div>
+
+  <!-- ============ 게시글 상세 ============ -->
+  <div class="screen" id="post-detail">
+    <div class="topbar"><button class="t-back" onclick="go('home-community')">← 목록</button><div class="t-title">게시글</div><div style="width:30px;"></div></div>
+    <div class="scroll">
+      <div class="post-detail-body">
+        <div class="cat">질문게시판</div>
+        <h2>장기수선충당금으로 승강기 전면 교체가 가능한가요?</h2>
+        <div class="meta">□□아파트 회장 · 2시간 전 · 조회 128</div>
+        <div class="content">승강기가 20년이 넘어 부품 수급도 어렵고 고장이 잦습니다. 전면 교체를 검토 중인데, 장기수선충당금으로 전액 충당이 가능한지 궁금합니다.</div>
+        <div class="answer">
+          <div class="who">△△아파트 회장 <span class="badge-mini">채택됨</span></div>
+          <div class="txt">장기수선계획에 없는 항목은 계획 변경(의결+동의) 절차를 먼저 거쳐야 해요.</div>
+        </div>
+        <div class="answer">
+          <div class="who">법무법인 제이엘 · 변호사</div>
+          <div class="txt">계획 변경 절차 세부사항은 법률자문 신청해주시면 서면으로 정리해드릴게요.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 글쓰기 ============ -->
+  <div class="screen" id="write-post">
+    <div class="topbar"><button class="t-back" onclick="go('home-community')">취소</button><div class="t-title">글쓰기</div><button class="t-action" onclick="submitPost()">등록</button></div>
+    <div class="scroll">
+      <div class="write-body">
+        <div class="cat-chip-row">
+          <button class="cat-chip active">질문게시판</button>
+          <button class="cat-chip">사례게시판</button>
+          <button class="cat-chip">자유게시판</button>
+        </div>
+        <input type="text" placeholder="제목을 입력해주세요">
+        <textarea placeholder="내용을 자세히 적어주세요"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 로드맵 ============ -->
+  <div class="screen" id="roadmap">
+    <div class="topbar"><div class="t-title">단계별 로드맵</div><div style="width:30px;"></div></div>
+    <div class="scroll">
+      <div class="roadmap-body">
+        <div style="font-size:12px;color:var(--ink-dim);">전체 진행률</div>
+        <div class="progress-bar"><div class="progress-fill" id="rm-progress" style="width:16%;"></div></div>
+
+        <div class="stage-mini done"><div class="stage-mini-head"><div class="stage-num-mini">1</div><div><div class="stage-mini-title">입예협 결성</div><div class="stage-mini-when">완료</div></div></div></div>
+
+        <div class="stage-mini"><div class="stage-mini-head"><div class="stage-num-mini">2</div><div><div class="stage-mini-title">계약·공고문 검수</div><div class="stage-mini-when">진행중</div></div></div>
+          <div class="mini-task"><input type="checkbox">독소조항 검수 신청</div>
+          <div class="mini-task"><input type="checkbox">대출규제 기준일 확인</div>
+        </div>
+
+        <div class="stage-mini"><div class="stage-mini-head"><div class="stage-num-mini">3</div><div><div class="stage-mini-title">사전점검·하자대응</div><div class="stage-mini-when">예정</div></div></div>
+          <div class="mini-task"><input type="checkbox">사전점검단 구성</div>
+          <div class="mini-task"><input type="checkbox">담보책임기간 확인</div>
+        </div>
+
+        <div class="stage-mini"><div class="stage-mini-head"><div class="stage-num-mini">4</div><div><div class="stage-mini-title">준공·인수인계</div><div class="stage-mini-when">예정</div></div></div></div>
+        <div class="stage-mini"><div class="stage-mini-head"><div class="stage-num-mini">5</div><div><div class="stage-mini-title">입대의 구성</div><div class="stage-mini-when">예정</div></div></div></div>
+        <div class="stage-mini"><div class="stage-mini-head"><div class="stage-num-mini">6</div><div><div class="stage-mini-title">입예협→입대의 인계</div><div class="stage-mini-when">예정</div></div></div></div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <button class="tab-item" data-tab="home-community" onclick="go('home-community')"><span class="ic">💬</span>커뮤니티</button>
+      <button class="tab-item active" data-tab="roadmap" onclick="go('roadmap')"><span class="ic">🗺️</span>로드맵</button>
+      <button class="tab-item" data-tab="concierge" onclick="go('concierge')"><span class="ic">🤝</span>컨시어지</button>
+      <button class="tab-item" data-tab="mypage" onclick="go('mypage')"><span class="ic">👤</span>마이</button>
+    </div>
+  </div>
+
+  <!-- ============ 컨시어지 ============ -->
+  <div class="screen" id="concierge">
+    <div class="topbar"><div class="t-title">컨시어지 상담신청</div><div style="width:30px;"></div></div>
+    <div class="scroll">
+      <div class="concierge-body">
+        <div style="font-size:13px;font-weight:800;">어떤 분야가 필요하세요?</div>
+        <div class="field-grid-mini">
+          <div class="field-card-mini" data-f="법률"><div class="ico">⚖️</div><div class="name">법률</div></div>
+          <div class="field-card-mini" data-f="교육"><div class="ico">🎓</div><div class="name">교육</div></div>
+          <div class="field-card-mini" data-f="세무"><div class="ico">💰</div><div class="name">세무·회계</div></div>
+        </div>
+        <button class="primary-btn" id="concierge-next" disabled onclick="matchExpert()">전문가 매칭하기</button>
+
+        <div id="matched-box" style="display:none;margin-top:16px;">
+          <div class="lawyer-card">
+            <div class="lawyer-row">
+              <div class="avatar-sm"></div>
+              <div>
+                <div class="lawyer-name" id="matched-name-mini">이지훈 변호사</div>
+                <div class="lawyer-tag">✓ 배정 완료</div>
+              </div>
+            </div>
+          </div>
+          <button class="primary-btn" onclick="alert('상담 예약이 완료됐어요 (데모)')">상담 예약하기</button>
+        </div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <button class="tab-item" data-tab="home-community" onclick="go('home-community')"><span class="ic">💬</span>커뮤니티</button>
+      <button class="tab-item" data-tab="roadmap" onclick="go('roadmap')"><span class="ic">🗺️</span>로드맵</button>
+      <button class="tab-item active" data-tab="concierge" onclick="go('concierge')"><span class="ic">🤝</span>컨시어지</button>
+      <button class="tab-item" data-tab="mypage" onclick="go('mypage')"><span class="ic">👤</span>마이</button>
+    </div>
+  </div>
+
+  <!-- ============ 마이페이지 ============ -->
+  <div class="screen" id="mypage">
+    <div class="topbar"><div class="t-title">마이페이지</div><div style="width:30px;"></div></div>
+    <div class="scroll">
+      <div class="my-body">
+        <div class="profile-row">
+          <div class="avatar-lg">회</div>
+          <div>
+            <div class="p-name">김황희 회장님</div>
+            <div class="p-unit">OO아파트 · 202동 101호</div>
+            <div class="verified-mini">✓ 단지 인증 완료</div>
+          </div>
+        </div>
+        <div class="menu-mini"><span>내가 쓴 글</span><span>›</span></div>
+        <div class="menu-mini"><span>상담 내역</span><span>›</span></div>
+        <div class="menu-mini"><span>알림 설정</span><span>›</span></div>
+        <div class="menu-mini"><span>인증 정보 관리</span><span>›</span></div>
+        <button class="logout-mini" onclick="go('ob1')">로그아웃</button>
+      </div>
+    </div>
+    <div class="tabbar">
+      <button class="tab-item" data-tab="home-community" onclick="go('home-community')"><span class="ic">💬</span>커뮤니티</button>
+      <button class="tab-item" data-tab="roadmap" onclick="go('roadmap')"><span class="ic">🗺️</span>로드맵</button>
+      <button class="tab-item" data-tab="concierge" onclick="go('concierge')"><span class="ic">🤝</span>컨시어지</button>
+      <button class="tab-item active" data-tab="mypage" onclick="go('mypage')"><span class="ic">👤</span>마이</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="dots-outer">
+  <div class="caption" id="screen-label">화면: 온보딩 1/3 — 인트로</div>
+</div>
+</div>
+
+<script>
+const labels = {
+  'ob1':'온보딩 1/3 — 인트로','ob2':'온보딩 2/3 — 인증코드','ob3':'온보딩 3/3 — 매칭완료',
+  'home-community':'홈 — 커뮤니티','post-detail':'커뮤니티 — 게시글 상세','write-post':'커뮤니티 — 글쓰기',
+  'roadmap':'홈 — 단계별 로드맵','concierge':'홈 — 컨시어지 상담신청','mypage':'홈 — 마이페이지'
+};
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.toggle('active', t.dataset.tab===id));
+  document.getElementById('screen-label').textContent = '화면: ' + (labels[id] || id);
+}
+
+// 컨시어지 분야 선택
+document.querySelectorAll('.field-card-mini').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.field-card-mini').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    document.getElementById('concierge-next').disabled = false;
+  });
+});
+const expertMap = {'법률':'이지훈 변호사','교육':'최민준 교육컨설턴트','세무':'하혜용 세무사'};
+function matchExpert(){
+  const selected = document.querySelector('.field-card-mini.active');
+  const field = selected ? selected.dataset.f : '법률';
+  document.getElementById('matched-name-mini').textContent = expertMap[field];
+  document.getElementById('matched-box').style.display = 'block';
+}
+
+function submitPost(){
+  alert('게시글이 등록됐어요 (데모)');
+  go('home-community');
+}
+
+// 로드맵 체크박스 → 진행률 반영(단순 데모 계산)
+document.querySelectorAll('.mini-task input').forEach(cb=>{
+  cb.addEventListener('change', ()=>{
+    const total = document.querySelectorAll('.mini-task input').length + 6; // 6단계 자체 가중치
+    const checked = document.querySelectorAll('.mini-task input:checked').length + 1; // 1단계 완료 고정
+    const pct = Math.min(100, Math.round(checked/total*100));
+    document.getElementById('rm-progress').style.width = pct+'%';
+  });
+});
+</script>
+
+</body>
+</html>

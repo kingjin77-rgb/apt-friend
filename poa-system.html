@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>위임장 접수 시스템 | 아파트친구</title>
+<style>
+  :root{--bg:#FFFFFF;--card:#F7F7F8;--ink:#19191C;--ink-dim:#8B8D94;--accent:#FF5A36;--line:#EDEDEF;
+        --ok:#2E9E5B;--no:#D64545;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+  .logo{font-weight:800;font-size:18px;}
+  .nav-r{display:flex;gap:10px;align-items:center;}
+  .back{color:var(--ink-dim);text-decoration:none;font-size:13px;}
+  .admin-btn{border:1px solid var(--line);background:none;border-radius:100px;padding:7px 14px;font-size:12px;color:var(--ink-dim);cursor:pointer;}
+
+  .tabs{display:flex;gap:8px;padding:16px 0;flex-wrap:wrap;border-bottom:1px solid var(--line);}
+  .tab-btn{border:1px solid var(--line);background:none;color:var(--ink-dim);padding:8px 16px;border-radius:100px;font-size:13px;cursor:pointer;}
+  .tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .view{display:none;padding:26px 0 50px;}
+  .view.active{display:block;}
+
+  /* 대시보드 */
+  .dash-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;text-align:center;margin-bottom:20px;}
+  .dash-pct{font-size:44px;font-weight:800;color:var(--accent);}
+  .dash-sub{color:var(--ink-dim);font-size:13px;margin-top:4px;}
+  .dash-bar{background:#fff;border:1px solid var(--line);border-radius:100px;height:14px;margin:18px 0 10px;overflow:hidden;}
+  .dash-bar-fill{background:var(--accent);height:100%;border-radius:100px;width:0%;transition:width .3s;}
+  .dash-stats{display:flex;justify-content:space-around;margin-top:16px;}
+  .dash-stat b{display:block;font-size:20px;}
+  .dash-stat span{color:var(--ink-dim);font-size:11px;}
+
+  .channel-row{display:flex;gap:10px;margin-bottom:20px;}
+  .channel-btn{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:14px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:700;}
+
+  /* 위임장 폼 */
+  fieldset{border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;}
+  legend{font-size:13px;font-weight:800;padding:0 6px;color:var(--accent);}
+  label{font-size:12px;color:var(--ink-dim);display:block;margin:10px 0 5px;}
+  input[type=text],input[type=tel],input[type=date],select{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:13px;color:var(--ink);font-family:inherit;}
+  .row2{display:flex;gap:10px;}
+  .row2>div{flex:1;}
+  .radio-row{display:flex;gap:16px;margin-top:8px;font-size:13px;}
+  .radio-row label{display:flex;align-items:center;gap:6px;color:var(--ink);margin:0;}
+
+  canvas{border:1px dashed var(--line);border-radius:10px;width:100%;height:140px;touch-action:none;background:#fff;}
+  .sig-tools{display:flex;justify-content:flex-end;margin-top:6px;}
+  .clear-btn{font-size:11px;color:var(--ink-dim);background:none;border:none;cursor:pointer;text-decoration:underline;}
+
+  .submit-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:15px;font-weight:800;font-size:15px;margin-top:20px;cursor:pointer;}
+  .done-view{text-align:center;padding:60px 0;}
+  .done-view .ck{font-size:52px;margin-bottom:16px;}
+  .done-note{color:var(--ink-dim);font-size:12px;margin-top:14px;}
+
+  /* 관리자 */
+  .admin-lock{max-width:340px;margin:60px auto;text-align:center;}
+  .admin-lock input{text-align:center;margin-top:14px;}
+  .admin-menu{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;}
+  th{color:var(--ink-dim);font-weight:700;}
+  .status-ok{color:var(--ok);font-weight:700;}
+  .status-no{color:var(--no);font-weight:700;}
+  .status-wait{color:var(--ink-dim);}
+  .export-row{display:flex;gap:8px;margin-bottom:12px;}
+  .export-btn{border:1px solid var(--line);background:none;border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;}
+
+  .settings-note{background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--ink-dim);margin-bottom:16px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">아파트친구 · 위임장 시스템</div>
+      <div class="nav-r">
+        <a class="back" href="index.html">← 홈으로</a>
+        <button class="admin-btn" onclick="showTab('admin-lock')">운영진 모드</button>
+      </div>
+    </nav>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="home" onclick="showTab('home')">🏠 홈</button>
+      <button class="tab-btn" data-tab="submit" onclick="showTab('submit')">📋 위임장 제출</button>
+      <button class="tab-btn" data-tab="settings" onclick="showTab('settings')">⚙️ 단지 설정</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ===== 홈 (접수율 대시보드) ===== -->
+  <div class="view active" id="home">
+    <div class="settings-note">이 페이지는 <b id="complex-name-display">우리 단지</b> 입주예정자협의회 전용 위임장 접수 페이지예요. 단지명·색상은 '단지 설정' 탭에서 바꿀 수 있어요.</div>
+
+    <div class="dash-card">
+      <div class="dash-pct" id="dash-pct">0%</div>
+      <div class="dash-sub">위임장 접수율</div>
+      <div class="dash-bar"><div class="dash-bar-fill" id="dash-bar"></div></div>
+      <div class="dash-sub" id="dash-count">총 <span id="total-units">1000</span>세대 중 0세대 접수</div>
+      <div class="dash-stats">
+        <div class="dash-stat"><b id="stat-ok" style="color:var(--ok);">0</b><span>동의 세대</span></div>
+        <div class="dash-stat"><b id="stat-wait" style="color:var(--ink-dim);">1000</b><span>접수 대기</span></div>
+      </div>
+    </div>
+
+    <div class="channel-row">
+      <a class="channel-btn" href="#" id="cafe-link">💚 카페 바로가기</a>
+      <a class="channel-btn" href="#" id="kakao-link">💬 오픈톡 바로가기</a>
+    </div>
+
+    <button class="submit-btn" onclick="showTab('submit')">위임장 제출하러 가기 →</button>
+  </div>
+
+  <!-- ===== 위임장 제출 폼 ===== -->
+  <div class="view" id="submit">
+    <h2 style="font-size:18px;font-weight:800;margin-bottom:16px;">위임장 제출</h2>
+
+    <fieldset>
+      <legend>계약자 정보 (반드시 계약자명으로 작성)</legend>
+      <div class="row2">
+        <div><label>성명 *</label><input type="text" id="f-name"></div>
+        <div><label>생년월일 *</label><input type="date" id="f-birth"></div>
+      </div>
+      <div class="row2">
+        <div><label>계약 동 *</label><input type="text" id="f-dong" placeholder="예: 101동"></div>
+        <div><label>계약 호수 *</label><input type="text" id="f-ho" placeholder="예: 1004호"></div>
+      </div>
+      <label>연락처 *</label><input type="tel" id="f-phone" placeholder="010-0000-0000">
+    </fieldset>
+
+    <fieldset>
+      <legend>위임 동의 여부</legend>
+      <p style="font-size:12px;color:var(--ink-dim);">상기 위임 사항에 대하여 임원진은 주택법 시행령 및 관련 법령을 준수하고 투명하게 운영합니다.</p>
+      <div class="radio-row">
+        <label><input type="radio" name="agree" value="agree" checked> 동의합니다</label>
+        <label><input type="radio" name="agree" value="disagree"> 미동의합니다</label>
+      </div>
+      <label style="margin-top:14px;">개인정보 수집·이용·제공 동의 *</label>
+      <div class="radio-row">
+        <label><input type="radio" name="privacy" value="agree" checked> 동의합니다</label>
+        <label><input type="radio" name="privacy" value="disagree"> 동의하지 않습니다</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>자필 서명 (손가락·마우스로 직접 서명)</legend>
+      <canvas id="sig-canvas"></canvas>
+      <div class="sig-tools"><button class="clear-btn" onclick="clearSig()">지우기</button></div>
+    </fieldset>
+
+    <button class="submit-btn" onclick="submitPOA()">위임장 제출하기 →</button>
+  </div>
+
+  <!-- ===== 제출완료 ===== -->
+  <div class="view" id="done">
+    <div class="done-view">
+      <div class="ck">✅</div>
+      <h2 style="font-size:18px;font-weight:800;">위임장이 접수되었습니다</h2>
+      <p class="done-note">📌 위임장 출력(PDF)이 필요하신 경우 운영진 또는 법무법인 제이엘에 문의해 주세요.</p>
+      <button class="submit-btn" onclick="showTab('home')" style="max-width:280px;margin:20px auto 0;">🏠 홈으로 가기</button>
+    </div>
+  </div>
+
+  <!-- ===== 단지 설정 (파라메트릭) ===== -->
+  <div class="view" id="settings">
+    <h2 style="font-size:18px;font-weight:800;margin-bottom:6px;">단지 설정</h2>
+    <p style="color:var(--ink-dim);font-size:12px;margin-bottom:16px;">이 페이지 하나로 어떤 단지든 재사용할 수 있어요. 값을 넣고 저장하면 위 화면 전체에 반영돼요.</p>
+    <label>단지명</label><input type="text" id="s-complex" placeholder="예: OO아파트">
+    <label>총 세대수</label><input type="text" id="s-units" placeholder="예: 1200">
+    <label>네이버 카페 주소</label><input type="text" id="s-cafe" placeholder="https://cafe.naver.com/...">
+    <label>카카오 오픈톡 주소</label><input type="text" id="s-kakao" placeholder="https://open.kakao.com/...">
+    <label>테마 색상</label><input type="text" id="s-color" placeholder="#FF5A36" value="#FF5A36">
+    <button class="submit-btn" onclick="saveSettings()">설정 저장</button>
+  </div>
+
+  <!-- ===== 관리자 잠금화면 ===== -->
+  <div class="view" id="admin-lock">
+    <div class="admin-lock">
+      <div style="font-size:32px;">🔐</div>
+      <h2 style="font-size:16px;font-weight:800;margin-top:10px;">운영진 인증</h2>
+      <p style="color:var(--ink-dim);font-size:12px;margin-top:6px;">운영진 접속 코드 또는 제이엘 마스터 코드를 입력하세요</p>
+      <input type="text" id="admin-code" placeholder="접속 코드">
+      <button class="submit-btn" onclick="checkAdmin()">접속하기</button>
+      <button class="back" style="background:none;border:none;margin-top:14px;cursor:pointer;" onclick="showTab('home')">홈으로</button>
+    </div>
+  </div>
+
+  <!-- ===== 관리자 대시보드 ===== -->
+  <div class="view" id="admin">
+    <h2 style="font-size:18px;font-weight:800;margin-bottom:14px;">운영진 모드</h2>
+    <div class="admin-menu">
+      <button class="tab-btn active">📋 접수목록</button>
+      <button class="tab-btn">🗺️ 배치도</button>
+      <button class="tab-btn">🗳️ 투표</button>
+      <button class="tab-btn">📢 공지</button>
+      <button class="tab-btn">💰 회비</button>
+      <button class="tab-btn">👥 임원</button>
+    </div>
+    <div class="export-row">
+      <button class="export-btn" onclick="exportCSV()">⬇ CSV 내보내기</button>
+      <button class="export-btn" onclick="alert('선택 항목 PDF 출력 (데모)')">🖨 PDF 출력</button>
+    </div>
+    <table>
+      <tr><th>접수일시</th><th>동/호수</th><th>성명</th><th>연락처</th><th>위임</th><th>개인정보</th></tr>
+      <tbody id="admin-table-body">
+        <tr><td colspan="6" style="text-align:center;color:var(--ink-dim);padding:20px;">접수된 위임장이 없습니다</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+let submissions = [];
+let totalUnits = 1000;
+
+function showTab(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn[data-tab]').forEach(t=>t.classList.toggle('active', t.dataset.tab===id));
+}
+
+// ===== 서명 캔버스 =====
+const canvas = document.getElementById('sig-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){
+  const ratio = window.devicePixelRatio || 1;
+  canvas.width = canvas.offsetWidth * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+  ctx.scale(ratio, ratio);
+  ctx.strokeStyle = '#19191C';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+}
+resizeCanvas();
+let drawing = false;
+function pos(e){
+  const r = canvas.getBoundingClientRect();
+  const t = e.touches ? e.touches[0] : e;
+  return {x: t.clientX - r.left, y: t.clientY - r.top};
+}
+function startDraw(e){ drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault(); }
+function moveDraw(e){ if(!drawing) return; const p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault(); }
+function endDraw(){ drawing = false; }
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', moveDraw);
+window.addEventListener('mouseup', endDraw);
+canvas.addEventListener('touchstart', startDraw);
+canvas.addEventListener('touchmove', moveDraw);
+canvas.addEventListener('touchend', endDraw);
+function clearSig(){ ctx.clearRect(0,0,canvas.width,canvas.height); }
+
+// ===== 제출 =====
+function submitPOA(){
+  const name = document.getElementById('f-name').value;
+  if(!name){ alert('성명을 입력해주세요'); return; }
+  const agree = document.querySelector('input[name=agree]:checked').value;
+  submissions.push({
+    time: new Date().toLocaleString('ko-KR'),
+    unit: (document.getElementById('f-dong').value||'-') + ' ' + (document.getElementById('f-ho').value||'-'),
+    name: name,
+    phone: document.getElementById('f-phone').value,
+    agree: agree,
+    privacy: document.querySelector('input[name=privacy]:checked').value
+  });
+  updateDashboard();
+  showTab('done');
+}
+
+function updateDashboard(){
+  const okCount = submissions.filter(s=>s.agree==='agree').length;
+  const totalSubmitted = submissions.length;
+  const pct = totalUnits ? Math.round(totalSubmitted/totalUnits*100) : 0;
+  document.getElementById('dash-pct').textContent = pct+'%';
+  document.getElementById('dash-bar').style.width = pct+'%';
+  document.getElementById('dash-count').innerHTML = `총 <span id="total-units">${totalUnits}</span>세대 중 ${totalSubmitted}세대 접수`;
+  document.getElementById('stat-ok').textContent = okCount;
+  document.getElementById('stat-wait').textContent = totalUnits - totalSubmitted;
+
+  const tbody = document.getElementById('admin-table-body');
+  if(submissions.length===0){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--ink-dim);padding:20px;">접수된 위임장이 없습니다</td></tr>';
+  } else {
+    tbody.innerHTML = submissions.map(s=>`
+      <tr>
+        <td>${s.time}</td><td>${s.unit}</td><td>${s.name}</td><td>${s.phone}</td>
+        <td class="${s.agree==='agree'?'status-ok':'status-no'}">${s.agree==='agree'?'동의':'미동의'}</td>
+        <td class="${s.privacy==='agree'?'status-ok':'status-no'}">${s.privacy==='agree'?'동의':'미동의'}</td>
+      </tr>`).join('');
+  }
+}
+
+// ===== 관리자 =====
+function checkAdmin(){
+  const code = document.getElementById('admin-code').value;
+  if(code){ showTab('admin'); } else { alert('접속 코드를 입력해주세요'); }
+}
+function exportCSV(){
+  if(submissions.length===0){ alert('내보낼 데이터가 없어요'); return; }
+  let csv = '접수일시,동/호수,성명,연락처,위임,개인정보\n';
+  submissions.forEach(s=>{ csv += `${s.time},${s.unit},${s.name},${s.phone},${s.agree},${s.privacy}\n`; });
+  const blob = new Blob(['\ufeff'+csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='위임장접수목록.csv'; a.click();
+}
+
+// ===== 파라메트릭 설정 =====
+function saveSettings(){
+  const complex = document.getElementById('s-complex').value || '우리 단지';
+  const units = parseInt(document.getElementById('s-units').value) || 1000;
+  const cafe = document.getElementById('s-cafe').value || '#';
+  const kakao = document.getElementById('s-kakao').value || '#';
+  const color = document.getElementById('s-color').value || '#FF5A36';
+
+  document.getElementById('complex-name-display').textContent = complex;
+  totalUnits = units;
+  document.getElementById('cafe-link').href = cafe;
+  document.getElementById('kakao-link').href = kakao;
+  document.documentElement.style.setProperty('--accent', color);
+  updateDashboard();
+  alert('설정이 저장됐어요');
+  showTab('home');
+}
+</script>
+
+</body>
+</html>

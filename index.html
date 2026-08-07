@@ -3,537 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>아파트친구 | 입대의 · 입예협 · 입주민이 모이는 곳</title>
-<style>
-  :root{
-    --bg:#FFFFFF; --bg-card:#F7F7F8; --ink:#19191C; --ink-dim:#8B8D94;
-    --accent:#FF5A36; --accent2:#FF5A36; --accent3:#FF5A36; --accent4:#FF5A36; --line:#EDEDEF;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
-  a{cursor:pointer;}
-
-  header{position:sticky;top:0;background:rgba(15,18,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:20;}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
-  .logo{font-weight:800;font-size:18px;letter-spacing:-.02em;}
-  .nav-links{display:flex;gap:22px;font-size:14px;color:var(--ink-dim);}
-  .nav-links>div{position:relative;}
-  .nav-links a{color:inherit;text-decoration:none;}
-  .nav-links a:hover{color:var(--ink);}
-  .dropdown{display:none;position:absolute;top:28px;left:0;background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:160px;flex-direction:column;gap:2px;z-index:30;}
-  .nav-links>div:hover .dropdown{display:flex;}
-  .dropdown a{padding:8px 10px;border-radius:8px;font-size:13px;}
-  .dropdown a:hover{background:rgba(255,255,255,.06);}
-  .cta-btn{background:var(--accent);color:#FFFFFF;padding:8px 18px;border-radius:100px;font-weight:700;font-size:13px;text-decoration:none;}
-
-  .tabbar{display:flex;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
-  .tab-btn{background:none;border:1px solid var(--line);color:var(--ink-dim);padding:8px 16px;border-radius:100px;font-size:13px;font-weight:700;cursor:pointer;}
-  .tab-btn.active[data-tab="union"]{background:var(--accent);color:#FFFFFF;border-color:var(--accent);}
-  .tab-btn.active[data-tab="preunion"]{background:var(--accent2);color:#FFFFFF;border-color:var(--accent2);}
-  .tab-btn.active[data-tab="resident"]{background:var(--accent3);color:#FFFFFF;border-color:var(--accent3);}
-  .tab-btn.active[data-tab="concierge"]{background:#FF5A36;color:#FFFFFF;border-color:#FF5A36;}
-
-  .hero{padding:70px 0 50px;text-align:center;}
-  .hero-video{position:relative;overflow:hidden;text-align:center;min-height:520px;display:flex;align-items:center;justify-content:center;}
-  .hero-video .bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55);animation:kenburns 18s ease-in-out infinite alternate;}
-  @keyframes kenburns{
-    0%{transform:scale(1) translate(0,0);}
-    100%{transform:scale(1.15) translate(-2%,-2%);}
-  }
-  .hero-video .overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,18,16,.15) 0%,rgba(15,18,16,.85) 90%);}
-  .hero-video .content{position:relative;z-index:2;padding:60px 24px;color:#FFFFFF;}
-  .hero-video .content .sub{color:rgba(255,255,255,.82);}
-  .hero-video .content h1{color:#FFFFFF;}
-  .hero-video .btn-ghost{border-color:rgba(255,255,255,.5);color:#FFFFFF;}
-  .hero-video .store-btn{border-color:rgba(255,255,255,.5);color:#FFFFFF;}
-  .eyebrow{font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:14px;}
-  h1{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-bottom:16px;}
-  .sub{color:var(--ink-dim);font-size:16px;margin-bottom:28px;}
-  .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-primary{color:#FFFFFF;padding:14px 26px;border-radius:100px;font-weight:700;text-decoration:none;font-size:15px;}
-  .btn-ghost{border:1px solid var(--line);color:var(--ink);padding:14px 26px;border-radius:100px;font-weight:700;text-decoration:none;font-size:15px;}
-  .store-row{display:flex;gap:10px;justify-content:center;margin-top:16px;}
-  .store-btn{border:1px solid var(--line);color:var(--ink);padding:10px 20px;border-radius:10px;font-size:13px;text-decoration:none;font-weight:700;}
-
-  section{padding:70px 0;border-top:1px solid var(--line);}
-  .section-eyebrow{font-size:13px;font-weight:700;margin-bottom:12px;}
-  h2{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:14px;}
-  .section-lead{color:var(--ink-dim);font-size:15px;max-width:560px;margin-bottom:36px;}
-
-  .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-  .feature-grid.four{grid-template-columns:repeat(4,1fr);}
-  .feature-card{background:var(--bg-card);border:1px solid var(--line);border-radius:16px;padding:22px;}
-  .feature-card h3{font-size:15px;margin-bottom:8px;font-weight:700;}
-  .feature-card p{color:var(--ink-dim);font-size:13px;}
-
-  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;}
-  .stat{padding:24px 0;}
-  .stat .num{font-size:32px;font-weight:800;}
-  .stat .label{color:var(--ink-dim);font-size:13px;margin-top:6px;}
-
-  /* 관리비 위젯 (입주민 탭 전용) */
-  .fee-widget{background:var(--bg-card);border:1px solid var(--line);border-radius:20px;padding:28px;max-width:420px;margin:0 auto 40px;text-align:left;}
-  .fee-widget .ddate{color:var(--accent3);font-weight:700;font-size:13px;}
-  .fee-widget table{width:100%;margin-top:14px;font-size:13px;border-collapse:collapse;}
-  .fee-widget td{padding:8px 0;border-bottom:1px solid var(--line);color:var(--ink-dim);}
-  .fee-widget td:last-child{text-align:right;color:var(--ink);font-weight:700;}
-
-  .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-  .case-card{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:20px;}
-  .case-card h4{font-size:14px;font-weight:700;margin-bottom:6px;}
-  .case-card p{color:var(--ink-dim);font-size:13px;}
-
-  .faq-item{border-bottom:1px solid var(--line);padding:18px 0;}
-  .faq-item h4{font-size:15px;font-weight:700;margin-bottom:6px;}
-  .faq-item p{color:var(--ink-dim);font-size:14px;}
-
-  footer{padding:44px 0;color:var(--ink-dim);font-size:12px;}
-  footer a{color:var(--ink-dim);}
-  .footer-cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px;margin-bottom:24px;}
-  .footer-cols h5{color:var(--ink);font-size:13px;margin-bottom:10px;}
-  .footer-cols a{display:block;padding:3px 0;}
-  .sns-row{display:flex;gap:10px;margin-top:10px;}
-  .sns-row a{border:1px solid var(--line);border-radius:100px;padding:6px 12px;}
-
-  .board-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-  .board-card{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:18px;text-decoration:none;color:var(--ink);}
-  .board-card .cnt{color:var(--ink-dim);font-size:12px;margin-top:4px;}
-
-  .event-strip{display:flex;gap:14px;overflow-x:auto;padding-bottom:6px;}
-  .event-card{min-width:220px;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:18px;flex:0 0 auto;}
-  .event-card .tag{font-size:11px;font-weight:700;color:#FFFFFF;background:var(--accent3);display:inline-block;padding:2px 8px;border-radius:100px;margin-bottom:8px;}
-
-  .cs-row{display:flex;gap:16px;flex-wrap:wrap;}
-  .cs-card{flex:1;min-width:220px;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:20px;}
-  .cs-card .num{font-size:20px;font-weight:800;}
-
-  .membership-card{background:linear-gradient(135deg,var(--accent3),#8a5c1f);border-radius:18px;padding:24px;max-width:340px;color:#FFFFFF;font-weight:700;}
-  .membership-card .no{font-size:13px;margin-top:20px;letter-spacing:.1em;}
-
-  .panel{display:none;}
-  .panel.active{display:block;}
-
-  .hamburger{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;font-size:16px;cursor:pointer;color:var(--ink);}
-  .mobile-menu{display:none;flex-direction:column;border-bottom:1px solid var(--line);background:var(--bg-card);}
-  .mobile-menu a{padding:14px 24px;border-top:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14px;}
-  .mobile-menu.open{display:flex;}
-
-  @media(max-width:720px){
-    .feature-grid,.feature-grid.four,.stat-row,.case-grid,.board-grid{grid-template-columns:1fr 1fr;}
-    .footer-cols{grid-template-columns:1fr;}
-    h1{font-size:26px;}
-    .nav-links{display:none;}
-    .hamburger{display:block;}
-    section{padding:44px 0;}
-    .hero-video{min-height:420px;}
-    .tabbar{overflow-x:auto;flex-wrap:nowrap;}
-    .tab-btn{white-space:nowrap;}
-  }
-  @media(max-width:480px){
-    .feature-grid.four,.board-grid{grid-template-columns:1fr;}
-    .stat-row{grid-template-columns:1fr;}
-    h1{font-size:22px;}
-    h2{font-size:22px;}
-  }
-</style>
+<title>아파트친구 | 입주예정자협의회 컨시어지 — 법무법인 제이엘</title>
+<meta name="description" content="입주예정자협의회 결성부터 입주자대표회의 인계까지. 위임장 전자접수, 공문서 자동생성, 담보책임기간 계산기를 무료로 제공합니다. 법무법인 제이엘이 만듭니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="아파트친구 | 입주예정자협의회 컨시어지">
+<meta property="og:description" content="협의회 결성부터 인계까지, 단계마다 필요한 서식과 도구를 제공합니다.">
+<meta property="og:locale" content="ko_KR">
+<link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <nav>
-      <div class="logo">아파트친구</div>
-      <div class="nav-links">
-        <div><a onclick="showTab('union')">입대의</a>
-          <div class="dropdown">
-            <a onclick="showTab('union')" href="#community-union">커뮤니티</a>
-            <a onclick="showTab('union')" href="#board-union">게시판</a>
-            <a onclick="showTab('union')" href="#legal">법률자문</a>
-            <a href="contents.html">콘텐츠</a>
-          </div>
-        </div>
-        <div><a onclick="showTab('preunion')">입예협</a>
-          <div class="dropdown">
-            <a href="start-association.html" style="font-weight:800;">🙋 우리 단지 시작하기</a>
-            <a onclick="showTab('preunion')" href="#community-preunion">커뮤니티</a>
-            <a onclick="showTab('preunion')" href="#board-preunion">게시판</a>
-            <a onclick="showTab('preunion')" href="#legal-preunion">법률자문</a>
-            <a href="lifecycle-guide.html">단계별 로드맵</a>
-            <a href="poa-system.html">위임장 접수 시스템</a>
-            <a href="document-center.html">공문서 자동생성센터</a>
-            <a href="resources.html">자료실</a>
-            <a href="tools.html">실무 도구</a>
-            <a href="contents.html">콘텐츠</a>
-          </div>
-        </div>
-        <div><a onclick="showTab('resident')">입주민</a>
-          <div class="dropdown">
-            <a onclick="showTab('resident')" href="#community-resident">관리비·생활정보</a>
-            <a onclick="showTab('resident')" href="#event-resident">이벤트</a>
-            <a onclick="showTab('resident')" href="#membership-resident">멤버십</a>
-            <a onclick="showTab('resident')" href="#cs-resident">고객센터</a>
-          </div>
-        </div>
-      </div>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <a href="login.html" id="nav-auth-link" style="color:var(--ink-dim);text-decoration:none;font-size:13px;">로그인</a>
-        <a class="cta-btn" href="signup.html">법률자문 시작하기</a>
-        <button class="hamburger" onclick="toggleMobileMenu()" aria-label="메뉴 열기">☰</button>
-      </div>
+<header class="afh">
+  <div class="wrap afh__in">
+    <a class="afh__logo" href="index.html">아파트친구<span>APT FRIEND</span></a>
+    <nav class="afh__nav" aria-label="주메뉴">
+      <a href="lifecycle-guide.html">단계별 안내</a>
+      <a href="poa-system.html">위임장 접수</a>
+      <a href="document-center.html">서식 생성</a>
+      <a href="tools.html">실무 도구</a>
+      <a href="contents.html">운영 자료</a>
+      <a href="concierge-request.html">상담 신청</a>
     </nav>
-    <div class="mobile-menu" id="mobile-menu">
-      <a onclick="showTab('union');closeMobileMenu();" href="#community-union">입대의</a>
-      <a onclick="showTab('preunion');closeMobileMenu();" href="#community-preunion">입예협</a>
-      <a onclick="showTab('resident');closeMobileMenu();" href="#community-resident">입주민</a>
-      <a onclick="showTab('concierge');closeMobileMenu();" href="#concierge-features">컨시어지</a>
-      <a href="contents.html">콘텐츠</a>
-      <a href="login.html">로그인</a>
-      <a href="signup.html">법률자문 시작하기</a>
-    </div>
-    <div class="tabbar wrap" style="padding-left:0;padding-right:0;">
-      <button class="tab-btn active" data-tab="union" onclick="showTab('union')">입주자대표회의 (입대의)</button>
-      <button class="tab-btn" data-tab="preunion" onclick="showTab('preunion')">입주예정자협의회 (입예협)</button>
-      <button class="tab-btn" data-tab="resident" onclick="showTab('resident')">입주민 생활정보</button>
-      <button class="tab-btn" data-tab="concierge" onclick="showTab('concierge')">컨시어지</button>
-    </div>
+    <a class="afh__cta" href="concierge-request.html">무료 상담</a>
+    <button class="afh__toggle" type="button" data-af-toggle aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
-<!-- ================= 입대의 ================= -->
-<div class="panel active" id="panel-union">
-<section class="hero-video" style="border:none;">
-  <img class="bg-img" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=70" alt="">
-  <div class="overlay"></div>
-  <div class="wrap content">
-    <div class="eyebrow" style="color:var(--accent);">우리 단지 운영의 모든 것</div>
-    <h1>전국 입대의가<br>모이는 단지 운영 커뮤니티</h1>
-    <p class="sub">입주자대표회의 커뮤니티부터 법률 자문·계약 관리까지, 단지 운영에 필요한 모든 것을 한 곳에서</p>
-    <div class="btn-row">
-      <a class="btn-primary" style="background:var(--accent);" href="signup.html">법률자문 시작하기</a>
-      <a class="btn-ghost" href="login.html">커뮤니티 둘러보기</a>
-    </div>
-  </div>
-</section>
-<section id="community-union">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent);">전국 입대의 회장님들이 연결되는</div>
-    <h2>우리 아파트 단지 운영 커뮤니티</h2>
-    <p class="section-lead">단지 운영 노하우와 해결 경험을 나누며 답을 찾아보세요</p>
-    <div class="feature-grid">
-      <div class="feature-card"><h3>실제 단지 경험 공유</h3><p>먼저 겪은 단지의 실제 대처 사례로 시행착오를 줄여요</p></div>
-      <div class="feature-card"><h3>실명·단지 검증 가입</h3><p>단지 인증을 거친 '진짜 의결권자'만 모이는 커뮤니티</p></div>
-      <div class="feature-card"><h3>익명 솔직 대화</h3><p>아파트명·성함은 가려지고 문제 해결 대화만 남아요</p></div>
-      <div class="feature-card"><h3>답변 알림</h3><p>급한 질문도 놓치지 않게 실시간 알림으로 확인</p></div>
-    </div>
-  </div>
-</section>
-<section id="legal">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent);">법률 운영 지원</div>
-    <h2>복잡한 단지 현안, 법률자문으로</h2>
-    <div class="stat-row">
-      <div class="stat"><div class="num" style="color:var(--accent);">1:1</div><div class="label">변호사 전담 매칭</div></div>
-      <div class="stat"><div class="num" style="color:var(--accent);">24시간</div><div class="label">평균 답변 시간</div></div>
-      <div class="stat"><div class="num" style="color:var(--accent);">100%</div><div class="label">의견서 최종 답변율</div></div>
-    </div>
-  </div>
-</section>
-<section>
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent);">운영 사례</div>
-    <h2>회장님들이 실제로 부딪히는 고민</h2>
-    <p class="section-lead">단순 정보 나열이 아니라, 왜 문제가 되는지까지 짚어드려요</p>
-    <div class="case-grid">
-      <div class="case-card"><h4>관리비, 올려야 하는데 무섭다</h4><p>미루면 노후에 요율이 폭등하지만, 임의로 올리면 지자체 감사에 걸려요. 절차를 지켜야 반발도, 감사도 피해요</p></div>
-      <div class="case-card"><h4>동대표가 안 뽑혀서 의결이 막혔다</h4><p>재공고만 반복되고 정족수가 안 차면 안건 전체가 밀려요. 참여율을 끌어올리는 게 먼저예요</p></div>
-      <div class="case-card"><h4>회의록 공개, 어디까지 해야 하나</h4><p>작성·보관·공개·열람 요구까지 규약대로 처리 안 하면 과태료 대상이 될 수 있어요</p></div>
-      <div class="case-card"><h4>층간소음, 내가 나서면 더 커진다</h4><p>회장이 한쪽 편을 들면 갈등이 번져요. 관리주체 권고→위원회 조정 순서를 지켜야 해요</p></div>
-      <div class="case-card"><h4>용역업체 선정, 매년 뒷말이 나온다</h4><p>입찰 절차를 건너뛰면 유착 의혹과 과태료로 이어져요. 공정한 절차가 곧 회장을 지키는 길이에요</p></div>
-    </div>
-  </div>
-</section>
-<section id="board-union">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent);">아파트친구 게시판</div>
-    <h2>고민이 모이는 곳</h2>
-    <p class="section-lead">질문을 남기고 경험 있는 회장님들의 답변을 확인해요</p>
-    <div class="board-grid">
-      <a class="board-card" href="#"><div>❓ 질문게시판</div><div class="cnt">가장 많이 찾는 게시판</div></a>
-      <a class="board-card" href="#"><div>📋 사례게시판</div><div class="cnt">단지별 실제 대응 사례</div></a>
-      <a class="board-card" href="#"><div>📢 공지사항</div><div class="cnt">운영진 공지</div></a>
-      <a class="board-card" href="#"><div>💬 자유게시판</div><div class="cnt">회장님 자유 소통</div></a>
-    </div>
-  </div>
-</section>
-</div>
+<main>
 
-<!-- ================= 입예협 ================= -->
-<div class="panel" id="panel-preunion">
-<section class="hero-video" style="border:none;">
-  <img class="bg-img" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=70" alt="">
-  <div class="overlay"></div>
-  <div class="wrap content">
-    <div class="eyebrow" style="color:var(--accent2);">협의회가 아직 없어도 괜찮아요</div>
-    <h1>혼자여도 시작할 수 있는<br>우리 단지 입예협</h1>
-    <p class="sub">협의회가 없다면 내가 1호 발기인이 되고, 이미 있다면 바로 합류하세요 — 결성부터 입대의 구성까지 함께해요</p>
-    <div class="btn-row">
-      <a class="btn-primary" style="background:var(--accent2);" href="start-association.html">우리 단지 시작하기</a>
-      <a class="btn-ghost" href="login.html">이미 있다면 합류하기</a>
-    </div>
-  </div>
-</section>
-<section style="padding:20px 0;border-top:1px solid var(--line);">
-  <div class="wrap" style="display:flex;flex-direction:column;gap:12px;">
-    <a href="start-association.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--accent2);border-radius:14px;padding:16px 20px;text-decoration:none;color:var(--ink);">
-      <div>
-        <div style="font-weight:800;font-size:14px;">🙋 우리 단지, 아직 협의회가 없어요</div>
-        <div style="color:var(--ink-dim);font-size:12px;margin-top:2px;">동호수만 입력하면 1호 발기인으로 바로 시작하고, 이웃을 초대해 인원을 모을 수 있어요</div>
+  <!-- 히어로 -->
+  <section class="sec" style="padding-block:clamp(56px,7vw,104px)">
+    <div class="wrap">
+      <p class="eyebrow">입주예정자협의회 컨시어지</p>
+      <h1 style="margin-top:14px;font-size:clamp(28px,4.4vw,52px);font-weight:800;line-height:1.24">
+        협의회, 처음이라도<br>순서대로 하면 됩니다.
+      </h1>
+      <p style="margin-top:20px;max-width:56ch;font-size:clamp(15px,1.5vw,18px);color:var(--ink-dim)">
+        발기인 모집부터 회칙 작성, 위임장 접수, 사전점검, 입주자대표회의 인계까지.
+        단계마다 무엇을 해야 하는지 알려드리고, 필요한 서식은 자동으로 만들어 드립니다.
+      </p>
+      <div class="btn-row" style="margin-top:32px">
+        <a class="btn btn--fill" href="lifecycle-guide.html">우리 단지는 지금 어느 단계? →</a>
+        <a class="btn" href="poa-system.html">위임장 접수 시작</a>
       </div>
-      <div style="color:var(--accent2);font-weight:800;">시작하기 →</div>
-    </a>
-    <a href="lifecycle-guide.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;text-decoration:none;color:var(--ink);">
-      <div>
-        <div style="font-weight:800;font-size:14px;">📍 우리 단지, 지금 몇 단계인가요?</div>
-        <div style="color:var(--ink-dim);font-size:12px;margin-top:2px;">결성→계약검수→사전점검→인수인계→입대의구성→인계, 6단계 로드맵으로 확인하세요</div>
+      <p style="margin-top:22px;font-size:13.5px;color:var(--ink-dim)">
+        모든 도구는 무료입니다. 회원가입 없이 바로 쓰실 수 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 핵심 도구 4종 -->
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">TOOLS</p>
+        <h2>협의회 운영에 실제로 쓰는 것들</h2>
+        <p>서식을 어디서 구할지, 위임장을 어떻게 받을지가 가장 먼저 막히는 지점입니다. 그 부분부터 해결했습니다.</p>
       </div>
-      <div style="color:var(--accent2);font-weight:800;">확인하기 →</div>
-    </a>
-  </div>
-</section>
-<section id="community-preunion">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent2);">전국 입예협 회장님들이 연결되는</div>
-    <h2>우리 단지 입예협 커뮤니티</h2>
-    <div class="feature-grid">
-      <div class="feature-card"><h3>사전점검 체크리스트</h3><p>단지유형별 항목을 미리 확인</p></div>
-      <div class="feature-card"><h3>동호수 인증 가입</h3><p>진짜 계약자만 모이는 커뮤니티</p></div>
-      <div class="feature-card"><h3>하자 접수·유형별 공유</h3><p>사진·유형 기반 유사사례 매칭</p></div>
-      <div class="feature-card"><h3>공동대응 모집</h3><p>집단 하자소송 진행 현황 실시간 공유</p></div>
-    </div>
-  </div>
-</section>
-<section id="legal-preunion">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent2);">법률 운영 지원</div>
-    <h2>하자·계약 자문, PC로 해결</h2>
-    <div class="stat-row">
-      <div class="stat"><div class="num" style="color:var(--accent2);">1:1</div><div class="label">변호사 전담 매칭</div></div>
-      <div class="stat"><div class="num" style="color:var(--accent2);">24시간</div><div class="label">평균 답변 시간</div></div>
-      <div class="stat"><div class="num" style="color:var(--accent2);">100%</div><div class="label">의견서 최종 답변율</div></div>
-    </div>
-  </div>
-</section>
-<section>
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent2);">운영 사례</div>
-    <h2>발기인·회장님들이 실제로 부딪히는 고민</h2>
-    <p class="section-lead">아무도 안 알려주는 결성 초기의 함정들이에요</p>
-    <div class="case-grid">
-      <div class="case-card"><h4>총회를 열었는데 정족수가 안 찼다</h4><p>불참 세대의 위임장을 미리 받아두지 않으면, 어렵게 모은 총회 자체가 무산돼요</p></div>
-      <div class="case-card"><h4>회칙 없이 총대만 있어서 대표성이 흔들린다</h4><p>시행사가 "누가 대표냐"고 물으면 답할 근거가 없어요. 회칙과 결성통지서가 먼저예요</p></div>
-      <div class="case-card"><h4>사전점검, 뭘 챙겨야 하는지 모르겠다</h4><p>체크리스트 없이 가면 시공사 페이스에 끌려가요. 항목을 미리 표준화해두세요</p></div>
-      <div class="case-card"><h4>하자보수 요청했는데 시공사가 미룬다</h4><p>구두로만 요청하면 기록이 안 남아요. 내용증명으로 기한을 못 박아야 해요</p></div>
-      <div class="case-card"><h4>담보책임기간을 놓쳐서 청구를 못 한다</h4><p>하자 유형별로 청구기한이 다 달라요. 날짜를 놓치면 권리 자체가 사라져요</p></div>
-      <div class="case-card"><h4>입대의로 넘어갈 때 자료가 뒤죽박죽이다</h4><p>회칙·회계·협상기록을 미리 정리해두지 않으면 새 입대의가 처음부터 다시 시작해야 해요</p></div>
-    </div>
-  </div>
-</section>
-<section id="board-preunion">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent2);">입예협 게시판</div>
-    <h2>하자·점검 정보가 모이는 곳</h2>
-    <div class="board-grid">
-      <a class="board-card" href="#"><div>🔍 사전점검 게시판</div><div class="cnt">체크리스트·후기 공유</div></a>
-      <a class="board-card" href="#"><div>🛠 하자접수 게시판</div><div class="cnt">사진·유형별 접수</div></a>
-      <a class="board-card" href="#"><div>✊ 공동대응 게시판</div><div class="cnt">집단소송·서명 모집</div></a>
-      <a class="board-card" href="#"><div>📢 공지사항</div><div class="cnt">운영진 공지</div></a>
-    </div>
-  </div>
-</section>
-</div>
 
-<!-- ================= 입주민 생활정보 ================= -->
-<div class="panel" id="panel-resident">
-<section class="hero-video" style="border:none;">
-  <img class="bg-img" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=70" alt="">
-  <div class="overlay"></div>
-  <div class="wrap content">
-    <div class="eyebrow" style="color:var(--accent3);">매일 쓰는 우리 단지 생활 기준</div>
-    <h1>관리비부터 방문차량까지,<br>입주민 생활정보 한눈에</h1>
-    <p class="sub">관리비 조회·알림, 방문차량 등록, 안내방송, 실시간 알림까지 우리 단지 생활을 한 앱에서</p>
-    <div class="store-row">
-      <a class="store-btn" href="#">Google Play</a>
-      <a class="store-btn" href="#">App Store</a>
+      <div class="grid grid--2">
+        <a class="card" href="poa-system.html">
+          <span class="card__no">01</span>
+          <h3>위임장 전자접수</h3>
+          <p>단지 전용 접수 페이지를 만들어 링크만 공유하면 됩니다. 세대별 제출 현황과 접수율이 실시간으로 집계되고, 운영진 모드에서 명단을 확인할 수 있습니다.</p>
+          <span class="card__more">접수 페이지 만들기 →</span>
+        </a>
+        <a class="card card--gold" href="document-center.html">
+          <span class="card__no">02</span>
+          <h3>공문서 자동생성</h3>
+          <p>위임장, 회칙, 총회 소집공고문, 결성통지서, 임원선출 결과공고를 단지명과 날짜만 넣으면 표준 양식으로 만들어 드립니다.</p>
+          <span class="card__more">서식 만들기 →</span>
+        </a>
+        <a class="card" href="tools.html">
+          <span class="card__no">03</span>
+          <h3>담보책임기간 계산기</h3>
+          <p>사용검사일과 하자 유형을 넣으면 청구 가능 기한이 나옵니다. 기한이 임박한 항목부터 챙기실 수 있습니다. 내용증명 작성기도 함께 있습니다.</p>
+          <span class="card__more">계산해 보기 →</span>
+        </a>
+        <a class="card card--gold" href="resources.html">
+          <span class="card__no">04</span>
+          <h3>단계별 서식 자료실</h3>
+          <p>결성 단계, 사전점검 단계, 인계 단계에서 각각 필요한 서식을 모아 두었습니다. 필요한 시점의 것만 골라 쓰시면 됩니다.</p>
+          <span class="card__more">자료실 열기 →</span>
+        </a>
+      </div>
     </div>
-  </div>
-</section>
-<section id="community-resident">
-  <div class="wrap">
-    <div class="fee-widget">
-      <div class="ddate">관리비 마감 D-30</div>
-      <table>
-        <tr><td>일반관리비</td><td>37,890원 (+150)</td></tr>
-        <tr><td>장기수선충당금</td><td>32,450원 (+10,420)</td></tr>
-        <tr><td>수도광열비</td><td>23,260원 (-5,200)</td></tr>
-      </table>
-      <a class="btn-primary" style="background:var(--accent3);display:inline-block;margin-top:16px;padding:10px 20px;font-size:13px;" href="#">관리비 조회하기</a>
-    </div>
-    <div class="section-eyebrow" style="color:var(--accent3);">입주민에게 꼭 필요한</div>
-    <h2>단지 생활 핵심 기능</h2>
-    <div class="feature-grid four">
-      <div class="feature-card"><h3>관리비 안내알림</h3><p>마감일 전 자동 알림</p></div>
-      <div class="feature-card"><h3>포인트·상품권 교환</h3><p>적립 캐시를 상품권으로</p></div>
-      <div class="feature-card"><h3>자동이체 관리</h3><p>계좌 등록·변경 한번에</p></div>
-      <div class="feature-card"><h3>관리비 내역·분석</h3><p>전월 대비 증감 그래프</p></div>
-      <div class="feature-card"><h3>방문차량 등록</h3><p>사전 등록으로 출입 간편화</p></div>
-      <div class="feature-card"><h3>안내방송 다시듣기</h3><p>놓친 방송도 앱에서 재생</p></div>
-      <div class="feature-card"><h3>실시간 알림</h3><p>단지 공지 즉시 푸시</p></div>
-      <div class="feature-card"><h3>입대의 바로가기</h3><p>민원 접수 시 입대의 게시판 자동 연결</p></div>
-    </div>
-  </div>
-</section>
-<section id="event-resident">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent3);">이벤트</div>
-    <h2>다양한 혜택을 확인해보세요</h2>
-    <div class="event-strip">
-      <div class="event-card"><div class="tag">HOT</div><h4>관리비 카드 이벤트</h4><p style="color:var(--ink-dim);font-size:13px;margin-top:6px;">최대 1만 6천 + 신규 8천 캐시백</p></div>
-      <div class="event-card"><div class="tag">진행중</div><h4>댓글 이벤트</h4><p style="color:var(--ink-dim);font-size:13px;margin-top:6px;">참여만 해도 포인트 적립</p></div>
-      <div class="event-card"><div class="tag">신규</div><h4>친구 초대 이벤트</h4><p style="color:var(--ink-dim);font-size:13px;margin-top:6px;">추천인·피추천인 모두 혜택</p></div>
-    </div>
-  </div>
-</section>
-<section id="membership-resident">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent3);">멤버십</div>
-    <h2>포인트를 모으고 캐시로 교환</h2>
-    <div class="membership-card">
-      법무법인 제이엘<br>MEMBERSHIP
-      <div class="no">**** **** **** 1234</div>
-    </div>
-  </div>
-</section>
-<section id="cs-resident">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent3);">고객센터</div>
-    <h2>궁금한 점은 언제든 문의하세요</h2>
-    <div class="cs-row">
-      <div class="cs-card"><div class="num">1599-0000</div><div style="color:var(--ink-dim);font-size:13px;margin-top:6px;">평일 10:00 ~ 17:00</div></div>
-      <div class="cs-card"><div class="num">우리 아파트 찾기</div><div style="color:var(--ink-dim);font-size:13px;margin-top:6px;">단지 검색 후 바로 이용</div></div>
-      <div class="cs-card"><div class="num">홈페이지 이관 신청</div><div style="color:var(--ink-dim);font-size:13px;margin-top:6px;">관리자용 신청 폼</div></div>
-    </div>
-  </div>
-</section>
-</div>
+  </section>
 
-<!-- ================= 컨시어지 ================= -->
-<div class="panel" id="panel-concierge">
-<section class="hero-video" style="border:none;">
-  <img class="bg-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600&q=70" alt="">
-  <div class="overlay"></div>
-  <div class="wrap content">
-    <div class="eyebrow" style="color:var(--accent4);">아파트 생활 고민, 내 손안에 해결</div>
-    <h1>단지 맞춤형<br>프리미엄 컨시어지</h1>
-    <p class="sub">법률·교육·세무·회계 — 분야별 전문가와 빠르게 연결되는 나만의 컨시어지</p>
-    <div class="btn-row">
-      <a class="btn-primary" style="background:var(--accent4);" href="concierge-request.html">컨시어지 시작하기</a>
-      <a class="btn-ghost" href="app-onboarding.html">앱 미리보기</a>
-    </div>
-  </div>
-</section>
-<section id="concierge-features">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent4);">주요 기능</div>
-    <h2>나만의 컨시어지, 이렇게 이용해요</h2>
-    <div class="feature-grid">
-      <div class="feature-card"><h3>1. 전문 자문 &amp; 상담</h3><p>교육·세무·회계 등 분야별 전문가와 빠르게 연결, 세대별 맞춤형 컨설팅 제공</p></div>
-      <div class="feature-card"><h3>2. 간편 예약 &amp; 관리</h3><p>병원·상담센터·학원 등 원하는 기관을 앱 안에서 예약하고 상담 내용을 한눈에 관리</p></div>
-      <div class="feature-card"><h3>3. 원스톱 솔루션</h3><p>즉시 해결할 문제부터 장기 대비 사항까지, 의뢰·안내·처리를 한 번에 — 시간과 비용 절감</p></div>
-      <div class="feature-card"><h3>4. 나만의 컨시어지</h3><p>개인별 맞춤 추천 서비스로 내 상황과 관심사에 꼭 맞는 주치의·자문위원 매칭</p></div>
-    </div>
-  </div>
-</section>
-<section id="concierge-flow">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--accent4);">이용 흐름</div>
-    <h2>인증코드 하나로 바로 연결</h2>
-    <div class="case-grid">
-      <div class="case-card"><h4>① 인증코드 입력</h4><p>초대받은 입주민 인증코드로 간편 접속</p></div>
-      <div class="case-card"><h4>② 전문가 배정</h4><p>동호수 기반으로 담당 변호사·자문위원 자동 매칭</p></div>
-      <div class="case-card"><h4>③ 상담 시작</h4><p>프로바입 서비스로 바로 상담·예약 진행</p></div>
-    </div>
-  </div>
-</section>
-</div>
+  <!-- 로드맵 -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">ROADMAP</p>
+        <h2>결성부터 인계까지, 여섯 단계</h2>
+        <p>협의회는 만들고 끝이 아니라 입주자대표회의로 넘기는 순간까지가 한 묶음입니다. 각 단계에서 놓치면 안 되는 것을 정리했습니다.</p>
+      </div>
 
-<section id="faq">
-  <div class="wrap">
-    <div class="section-eyebrow" style="color:var(--ink-dim);">FAQ</div>
-    <h2>궁금한 점이 있으신가요?</h2>
-    <div class="faq-item"><h4>세 개 탭은 어떻게 다른가요?</h4><p>입대의는 회장단 운영, 입예협은 입주 전 대응, 입주민은 전체 세대 생활정보 서비스예요.</p></div>
-    <div class="faq-item"><h4>지금은 통합 앱인가요?</h4><p>네, 현재는 통합 앱으로 제공되며 향후 서비스별 앱으로 분리될 예정이에요.</p></div>
-    <div class="faq-item"><h4>요금은 어떻게 되나요?</h4><p>체험판은 무료, 초과 자문·소송 대리는 별도 비용이에요.</p></div>
-  </div>
-</section>
+      <div class="grid grid--3">
+        <div class="card"><span class="card__no">STEP 01</span><h3>협의회 결성</h3><p>발기인 모집, 회칙 제정, 창립총회 소집과 임원 선출까지의 절차.</p></div>
+        <div class="card"><span class="card__no">STEP 02</span><h3>계약 검수</h3><p>분양계약서와 공고문에서 확인해야 할 조건, 시행사에 요구할 사항.</p></div>
+        <div class="card"><span class="card__no">STEP 03</span><h3>사전점검</h3><p>점검 기록을 남기는 방법. 이 기록이 나중에 하자소송의 증거가 됩니다.</p></div>
+        <div class="card"><span class="card__no">STEP 04</span><h3>입주 · 등기</h3><p>잔금과 등기 일정 조율, 단체등기 진행, 은행 협약 확인.</p></div>
+        <div class="card"><span class="card__no">STEP 05</span><h3>입대의 구성</h3><p>입주자대표회의 구성 요건과 선거 절차, 관리규약 준비.</p></div>
+        <div class="card"><span class="card__no">STEP 06</span><h3>인계</h3><p>협의회가 모은 자료와 회계를 입대의로 넘기는 체크리스트.</p></div>
+      </div>
 
-<footer>
-  <div class="wrap">
-    <div class="footer-cols">
-      <div>
-        <h5>아파트친구</h5>
-        <div style="margin-bottom:8px;color:var(--ink-dim);">운영: 법무법인 제이엘</div>
-        <div>대표: 이지훈 변호사 · 사업자등록번호: 665-85-01685</div>
-        <div>경기 화성시 동탄순환대로 127-5 우성센트럴타워 914호</div>
-        <div>TEL: 1899-4252</div>
-        <div class="sns-row">
-          <a href="#">블로그</a><a href="#">유튜브</a><a href="#">인스타그램</a><a href="#">카카오</a>
+      <div class="btn-row" style="margin-top:30px">
+        <a class="btn btn--fill" href="lifecycle-guide.html">단계별 상세 안내 →</a>
+        <a class="btn" href="handover-checklist.html">인계 체크리스트</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 아직 협의회가 없다면 -->
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <div class="grid grid--2" style="align-items:center">
+        <div>
+          <p class="eyebrow">START HERE</p>
+          <h2 style="margin-top:10px;font-size:clamp(21px,2.4vw,30px)">아직 협의회가 없는 단지라면</h2>
+          <p style="margin-top:14px;color:var(--ink-dim)">
+            혼자 시작하기는 막막합니다. 몇 명이 모여야 하는지, 어떤 서류로 시작하는지,
+            시행사에 언제 통보해야 하는지를 순서대로 안내해 드립니다.
+          </p>
+          <ul class="dash">
+            <li>발기인 몇 명이면 시작할 수 있는지</li>
+            <li>회칙에 반드시 들어가야 할 조항</li>
+            <li>창립총회 소집 통지 방법과 기한</li>
+            <li>시행사·시공사에 협의회 결성을 알리는 문서</li>
+          </ul>
+          <div class="btn-row" style="margin-top:26px">
+            <a class="btn btn--fill" href="start-association.html">협의회 시작하기 →</a>
+          </div>
+        </div>
+        <div class="card card--gold">
+          <span class="card__no">CONCIERGE</span>
+          <h3>도구만으로 부족하다면</h3>
+          <p>
+            서식과 계산기로 해결되지 않는 문제가 있습니다. 시행사가 협의회를 인정하지 않거나,
+            하자 보수를 거부하거나, 총회 결의에 문제가 생겼을 때입니다.
+          </p>
+          <p style="margin-top:12px">
+            이런 사안은 법무법인 제이엘의 담당 변호사가 직접 검토해 드립니다.
+            단지 단위 상담은 비용이 발생하지 않습니다.
+          </p>
+          <div class="btn-row" style="margin-top:22px">
+            <a class="btn btn--fill" href="concierge-request.html">상담 신청 →</a>
+          </div>
         </div>
       </div>
-      <div>
-        <h5>바로가기</h5>
-        <a href="lifecycle-guide.html">단계별 로드맵</a>
-        <a href="resources.html">자료실</a>
-        <a href="tools.html">실무 도구</a>
-        <a href="contents.html">콘텐츠</a>
-        <a href="concierge-request.html">컨시어지 상담신청</a>
-        <a href="login.html">커뮤니티 로그인</a>
-        <a href="signup.html">법률자문 회원가입</a>
-        <a href="#board-union">입대의 게시판</a>
-        <a href="#board-preunion">입예협 게시판</a>
-        <a href="#cs-resident">고객센터</a>
+    </div>
+  </section>
+
+  <!-- 제이엘 연결 -->
+  <section class="sec sec--navy">
+    <div class="wrap">
+      <div class="sec-head sec-head--center" style="margin-bottom:clamp(24px,3vw,38px)">
+        <p class="eyebrow">POWERED BY JL LAW FIRM</p>
+        <h2>법무법인 제이엘이 만듭니다</h2>
+        <p style="margin-inline:auto">
+          공동주택 단체등기와 하자소송을 전담해 온 법무법인이 직접 운영합니다.
+          현장에서 협의회가 실제로 막히는 지점을 알기 때문에 만든 도구들입니다.
+        </p>
       </div>
-      <div>
-        <h5>정책</h5>
-        <a href="#">이용약관</a>
-        <a href="#">개인정보처리방침</a>
-        <a href="#">사업자정보확인</a>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--light" href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/" target="_blank" rel="noopener">법무법인 제이엘 ↗</a>
+        <a class="btn btn--light" href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/dongtan.html" target="_blank" rel="noopener">제이엘 등기센터 ↗</a>
+        <a class="btn btn--light" href="tel:18994252">단체등기 문의 1899-4252</a>
       </div>
     </div>
-    © 2026 아파트친구 (운영: 법무법인 제이엘). All rights reserved.
+  </section>
+
+</main>
+
+<footer class="aff">
+  <div class="wrap">
+    <div class="aff__top">
+      <div class="aff__brand">
+        <strong>아파트친구</strong>
+        <p>입주예정자협의회가 처음부터 끝까지 막히지 않도록 돕는 컨시어지 서비스입니다.</p>
+      </div>
+      <nav class="aff__nav" aria-label="하단메뉴">
+        <a href="lifecycle-guide.html">단계별 안내</a>
+        <a href="poa-system.html">위임장 접수</a>
+        <a href="document-center.html">서식 생성</a>
+        <a href="tools.html">실무 도구</a>
+        <a href="resources.html">자료실</a>
+        <a href="contents.html">운영 자료</a>
+        <a href="handover-checklist.html">인계 체크리스트</a>
+        <a href="concierge-request.html">상담 신청</a>
+      </nav>
+    </div>
+
+    <div class="aff__jl">
+      <span>운영 — <b>법무법인 제이엘</b></span>
+      <span>서울 02-537-0123</span>
+      <span>단체등기 1899-4252</span>
+      <a href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/" target="_blank" rel="noopener">법무법인 제이엘 ↗</a>
+    </div>
+
+    <p class="aff__copy">
+      이 사이트가 제공하는 서식과 계산 결과는 일반적인 안내이며 구체적 사건의 법률자문을 대신하지 않습니다.
+      © JL LAW FIRM. All rights reserved.
+    </p>
   </div>
 </footer>
 
-<script>
-function toggleMobileMenu(){
-  document.getElementById('mobile-menu').classList.toggle('open');
-}
-function closeMobileMenu(){
-  document.getElementById('mobile-menu').classList.remove('open');
-}
-if(localStorage.getItem('jl_logged_in')){
-  var link=document.getElementById('nav-auth-link');
-  if(link){ link.textContent='내 커뮤니티'; link.href='community.html'; }
-}
-function showTab(tab){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
-  ['union','preunion','resident','concierge'].forEach(t=>{
-    document.getElementById('panel-'+t).classList.toggle('active', t===tab);
-  });
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-</script>
-
+<script src="assets/js/app.js"></script>
 </body>
 </html>

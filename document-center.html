@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>공문서 자동생성센터 | 아파트친구</title>
+<link rel="stylesheet" href="assets/css/app.css">
 <style>
-  :root{--bg:#FFFFFF;--card:#F7F7F8;--ink:#19191C;--ink-dim:#8B8D94;--accent:#FF5A36;--line:#EDEDEF;}
+  :root{--bg:#FFFFFF;--card:var(--bg-card);--ink:var(--ink);--ink-dim:var(--ink-dim);--accent:var(--navy);--line:var(--line);}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
   .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
@@ -42,15 +43,23 @@
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <nav>
-      <div class="logo">아파트친구</div>
-      <a class="back" href="lifecycle-guide.html">← 로드맵으로</a>
+<header class="afh">
+  <div class="wrap afh__in">
+    <a class="afh__logo" href="index.html">아파트친구<span>APT FRIEND</span></a>
+    <nav class="afh__nav" aria-label="주메뉴">
+      <a href="lifecycle-guide.html">단계별 안내</a>
+      <a href="poa-system.html">위임장 접수</a>
+      <a href="document-center.html">서식 생성</a>
+      <a href="tools.html">실무 도구</a>
+      <a href="contents.html">운영 자료</a>
+      <a href="concierge-request.html">상담 신청</a>
     </nav>
+    <a class="afh__cta" href="concierge-request.html">무료 상담</a>
+    <button class="afh__toggle" type="button" data-af-toggle aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
-
 <div class="wrap">
   <div class="head">
     <div class="eyebrow">공문서 자동생성센터</div>
@@ -167,7 +176,39 @@
 function downloadDoc(filename, bodyHtml){
   const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
   <head><meta charset='utf-8'><title>${filename}</title></head>
-  <body style="font-family:'맑은 고딕',sans-serif;font-size:11pt;line-height:1.9;padding:40px;">${bodyHtml}</body></html>`;
+  <body style="font-family:'맑은 고딕',sans-serif;font-size:11pt;line-height:1.9;padding:40px;">${bodyHtml}<footer class="aff">
+  <div class="wrap">
+    <div class="aff__top">
+      <div class="aff__brand">
+        <strong>아파트친구</strong>
+        <p>입주예정자협의회가 처음부터 끝까지 막히지 않도록 돕는 컨시어지 서비스입니다.</p>
+      </div>
+      <nav class="aff__nav" aria-label="하단메뉴">
+        <a href="lifecycle-guide.html">단계별 안내</a>
+        <a href="poa-system.html">위임장 접수</a>
+        <a href="document-center.html">서식 생성</a>
+        <a href="tools.html">실무 도구</a>
+        <a href="resources.html">자료실</a>
+        <a href="contents.html">운영 자료</a>
+        <a href="handover-checklist.html">인계 체크리스트</a>
+        <a href="concierge-request.html">상담 신청</a>
+      </nav>
+    </div>
+    <div class="aff__jl">
+      <span>운영 — <b>법무법인 제이엘</b></span>
+      <span>서울 02-537-0123</span>
+      <span>단체등기 1899-4252</span>
+      <a href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/" target="_blank" rel="noopener">법무법인 제이엘 ↗</a>
+    </div>
+    <p class="aff__copy">
+      이 사이트가 제공하는 서식과 계산 결과는 일반적인 안내이며 구체적 사건의 법률자문을 대신하지 않습니다.
+      © JL LAW FIRM. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body></html>`;
   const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');

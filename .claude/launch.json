@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "apt-friend",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5190", "--directory", "D:/DDownloads/apt-friend"],
+      "port": 5190,
+      "autoPort": false
+    }
+  ]
+}

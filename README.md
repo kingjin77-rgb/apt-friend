@@ -1,32 +1,60 @@
 # 아파트친구 (apt-friend)
 
-법무법인 제이엘이 만드는 아파트 생애주기 컨시어지 앱 — 입주예정자협의회(입예협) 결성부터 입주자대표회의(입대의) 구성까지, 그리고 입주민 생활정보와 전문가 컨시어지까지 하나로.
+입주예정자협의회 컨시어지 — **법무법인 제이엘**이 운영합니다.
 
-## 페이지 구성
+협의회 결성부터 입주자대표회의 인계까지, 단계마다 필요한 안내와 서식을 무료로 제공합니다.
+회원가입 없이 바로 쓸 수 있습니다.
 
-| 파일 | 설명 |
+## 페이지
+
+| 파일 | 내용 |
 |---|---|
-| `index.html` | 메인 (입대의 · 입예협 · 입주민 · 컨시어지 4탭) |
-| `start-association.html` | 협의회 없는 개인이 시작하는 발기인 모집 |
-| `lifecycle-guide.html` | 결성→계약검수→사전점검→인수인계→입대의구성→인계, 6단계 로드맵 |
-| `document-center.html` | 공문서 자동생성센터 (위임장/회칙/소집공고문/결성통지서/임원선출결과) |
-| `poa-system.html` | 위임장 전자서명 접수 시스템 (실시간 접수율 대시보드 + 운영진 모드) |
-| `resources.html` | 단계별 템플릿 자료실 |
-| `tools.html` | 담보책임기간 계산기 · 내용증명 생성기 |
-| `contents.html` | 단지 운영 실무 콘텐츠 12편 |
-| `signup.html` / `login.html` | 회원가입 / 로그인 |
-| `community.html` / `post-detail.html` / `write-post.html` | 커뮤니티 게시판 |
-| `mypage.html` | 마이페이지 |
-| `concierge-request.html` | 컨시어지 상담신청 (분야선택→매칭→예약) |
-| `handover-checklist.html` | 입예협→입대의 인계 체크리스트 |
-| `app-onboarding.html` | 모바일 앱 온보딩 3화면 목업 |
-| `app-full-demo.html` | 모바일 앱 전체 작동 목업 (온보딩+탭바 4개 화면) |
+| `index.html` | 메인 — 도구 4종 · 6단계 로드맵 · 상담 안내 |
+| `lifecycle-guide.html` | 결성→계약검수→사전점검→입주·등기→입대의구성→인계 |
+| `poa-system.html` | 위임장 전자접수 — 단지별 접수 페이지, 접수율 집계, 운영진 모드 |
+| `document-center.html` | 공문서 자동생성 — 위임장·회칙·소집공고문·결성통지서·임원선출결과 |
+| `tools.html` | 담보책임기간 계산기 · 내용증명 작성기 |
+| `resources.html` | 단계별 서식 자료실 |
+| `contents.html` | 단지 운영 실무 콘텐츠 |
+| `handover-checklist.html` | 협의회 → 입대의 인계 체크리스트 |
+| `start-association.html` | 협의회가 없는 단지의 발기인 모집 |
+| `concierge-request.html` | 상담 신청 |
 
-## 배포 (GitHub Pages)
+## 구조
 
-1. Settings → Pages → Branch: `main` / `/(root)` 선택
-2. `https://<username>.github.io/<repo명>/` 으로 접속
+정적 HTML. 빌드 도구 없음. 파일만 올리면 동작합니다.
+
+```
+assets/css/app.css   공통 스타일 (제이엘 브랜드 토큰)
+assets/js/app.js     공통 스크립트 (모바일 메뉴)
+```
+
+각 페이지는 `app.css` 를 먼저 불러온 뒤 자체 `<style>` 로 페이지 고유 부분만 덮습니다.
+헤더·푸터 markup 은 모든 페이지가 동일합니다. 고칠 때는 전 페이지를 함께 맞춰야 합니다.
+
+## 로컬 확인
+
+```bash
+python -m http.server 5190
+```
+
+http://localhost:5190
+
+## 법무법인 제이엘 홈페이지와의 관계
+
+- 제이엘 홈페이지 상단 메뉴 **아파트친구** 가 이 사이트로 연결됩니다.
+- 이 사이트 푸터와 하단 섹션이 제이엘 홈페이지·등기센터로 되돌아갑니다.
+- 도구는 무료로 열어두고, 사건이 되는 사안은 상담으로 연결하는 구조입니다.
+
+저장소: <https://github.com/kingjin77-rgb/jl-lawfirm-homepage>
 
 ## 상태
 
-프로토타입 단계 — 모든 데이터 저장은 브라우저 localStorage 기반 데모입니다. 실서비스 전환 시 백엔드(DB) 연동이 필요합니다.
+**프로토타입.** 위임장 접수와 서식 생성은 브라우저 저장소(localStorage) 기반이라
+같은 기기에서만 유지됩니다. 여러 단지를 실제로 운영하려면 서버와 데이터베이스가 필요합니다.
+
+## 정리 이력 (2026-08-06)
+
+운영 인력 없이 열어두면 빈 화면이 되는 커뮤니티·회원 기능을 걷어냈습니다.
+제거: `community.html` `post-detail.html` `write-post.html` `login.html`
+`signup.html` `mypage.html` `app-onboarding.html` `app-full-demo.html`

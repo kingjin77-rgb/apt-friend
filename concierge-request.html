@@ -3,49 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>컨시어지 상담신청 | 아파트친구</title>
+<title>상담 신청 | 아파트친구</title>
+<meta name="description" content="입주예정자협의회 운영 중 막히는 문제를 법무법인 제이엘 담당 변호사가 검토해 드립니다. 단지 단위 상담은 비용이 발생하지 않습니다.">
 <link rel="stylesheet" href="assets/css/app.css">
 <style>
-  :root{--bg:#FFFFFF;--card:var(--bg-card);--ink:var(--ink);--ink-dim:var(--ink-dim);--accent:var(--navy);--line:var(--line);}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--ink);font-family:-apple-system,'Pretendard',sans-serif;line-height:1.5;}
-  .wrap{max-width:560px;margin:0 auto;padding:0 24px;}
-  header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10;}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
-  .logo{font-weight:800;font-size:18px;}
-  .back{color:var(--ink-dim);text-decoration:none;font-size:13px;}
-
-  .steps{display:flex;gap:6px;padding:20px 0 0;}
-  .step{flex:1;height:4px;background:var(--line);border-radius:4px;}
-  .step.done{background:var(--accent);}
-
-  .step-view{display:none;padding:28px 0 50px;}
-  .step-view.active{display:block;}
-  h1{font-size:20px;font-weight:800;margin-bottom:8px;}
-  .lead{color:var(--ink-dim);font-size:13px;margin-bottom:24px;}
-
-  .field-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-  .field-card{border:1px solid var(--line);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;background:var(--card);}
-  .field-card.active{border-color:var(--accent);background:rgba(255,90,54,.06);}
-  .field-card .ico{font-size:26px;margin-bottom:8px;}
-  .field-card .name{font-weight:700;font-size:14px;}
-
-  .next-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:14px;font-weight:800;font-size:15px;margin-top:26px;cursor:pointer;}
-  .next-btn:disabled{background:var(--line);color:var(--ink-dim);cursor:not-allowed;}
-
-  .match-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:20px;}
-  .match-row{display:flex;align-items:center;gap:14px;}
-  .match-avatar{width:52px;height:52px;border-radius:100px;background:#333;flex-shrink:0;}
-  .match-name{font-weight:800;font-size:16px;}
-  .match-tag{color:var(--ink-dim);font-size:12px;margin-top:2px;}
-  .match-badge{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;margin-top:8px;}
-
-  label{font-size:13px;color:var(--ink-dim);display:block;margin:14px 0 6px;}
-  input,textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--ink);font-family:inherit;}
-  textarea{min-height:100px;resize:vertical;}
-
-  .done-view{text-align:center;padding:40px 0;}
-  .done-view .check{font-size:48px;margin-bottom:16px;}
+  .cf { max-width: 640px; }
+  .cf__fld { margin-top: 20px; }
+  .cf__fld > label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: var(--navy); }
+  .cf__fld .req { margin-left: 5px; padding: 2px 7px; font-size: 11px; font-weight: 700; color: var(--gold); background: rgba(176,141,79,.12); }
+  .cf__fld input, .cf__fld select, .cf__fld textarea {
+    width: 100%; padding: 13px 15px; font: inherit; font-size: 15px; color: var(--ink);
+    border: 1px solid var(--line); background: #fff;
+  }
+  .cf__fld input:focus, .cf__fld select:focus, .cf__fld textarea:focus { outline: 0; border-color: var(--navy); }
+  .cf__fld textarea { min-height: 150px; resize: vertical; line-height: 1.75; }
+  .cf__row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+  .cf__hint { margin-top: 6px; font-size: 13px; color: var(--ink-dim); }
+  .cf__chk { display: flex; gap: 10px; align-items: flex-start; margin-top: 24px; padding: 16px 18px; background: var(--bg-card); font-size: 13.5px; line-height: 1.7; }
+  .cf__chk input { margin-top: 4px; flex: 0 0 auto; width: 17px; height: 17px; accent-color: var(--navy); }
+  .cf__chk a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+  .cf__msg { margin-top: 14px; min-height: 22px; font-size: 14px; font-weight: 600; }
+  .cf__msg.is-bad { color: #a3312a; }
+  .cf__msg.is-ok { color: #1d6b3a; }
+  @media (max-width: 560px) { .cf__row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -57,88 +37,122 @@
       <a href="lifecycle-guide.html">단계별 안내</a>
       <a href="poa-system.html">위임장 접수</a>
       <a href="document-center.html">서식 생성</a>
-      <a href="tools.html">실무 도구</a>
-      <a href="contents.html">운영 자료</a>
-      <a href="concierge-request.html">상담 신청</a>
+      <a href="concierge-request.html" aria-current="page">상담 신청</a>
     </nav>
-    <a class="afh__cta" href="concierge-request.html">무료 상담</a>
+    <a class="afh__cta" href="tel:18994252">1899-4252</a>
     <button class="afh__toggle" type="button" data-af-toggle aria-label="메뉴 열기" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<div class="wrap">
-  <div class="steps">
-    <div class="step done" id="pg1"></div><div class="step" id="pg2"></div><div class="step" id="pg3"></div>
-  </div>
 
-  <div class="step-view active" id="step1">
-    <h1>어떤 분야가 필요하세요?</h1>
-    <p class="lead">필요한 분야를 선택하면 담당 전문가를 바로 매칭해드려요</p>
-    <div class="field-grid">
-      <div class="field-card" data-field="법률">Ⓛ<div class="ico">⚖️</div><div class="name">법률</div></div>
-      <div class="field-card" data-field="교육">Ⓔ<div class="ico">🎓</div><div class="name">교육</div></div>
-      <div class="field-card" data-field="세무회계">Ⓣ<div class="ico">💰</div><div class="name">세무·회계</div></div>
-    </div>
-    <button class="next-btn" id="next1" disabled onclick="goStep(2)">다음</button>
-  </div>
-
-  <div class="step-view" id="step2">
-    <h1>담당 전문가가 배정됐어요</h1>
-    <p class="lead" id="matched-field-text">선택하신 분야 기준으로 자동 매칭됐어요</p>
-    <div class="match-card">
-      <div class="match-row">
-        <div class="match-avatar"></div>
-        <div>
-          <div class="match-name" id="matched-name">이지훈 변호사</div>
-          <div class="match-tag">법무법인 제이엘 · 공동주택 전문</div>
-          <div class="match-badge">✓ 배정 완료</div>
-        </div>
+<main>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">CONCIERGE</p>
+        <h2>협의회 운영, 막히는 부분이 있으신가요?</h2>
+        <p>
+          서식과 안내로 해결되지 않는 문제가 있습니다. 시행사가 협의회를 상대해 주지 않거나,
+          하자 보수를 거부하거나, 총회 결의 절차에 문제가 생겼을 때입니다.
+          법무법인 제이엘의 담당 변호사가 직접 검토해 드립니다.
+        </p>
       </div>
-    </div>
-    <label>상담 희망 일시</label>
-    <input type="text" placeholder="예: 7/28(월) 오후 2시">
-    <label>상담 내용</label>
-    <textarea placeholder="상담받고 싶은 내용을 간단히 적어주세요"></textarea>
-    <button class="next-btn" onclick="goStep(3)">상담 예약하기</button>
-  </div>
 
-  <div class="step-view" id="step3">
-    <div class="done-view">
-      <div class="check">✅</div>
-      <h1>예약이 완료됐어요</h1>
-      <p class="lead">담당 전문가가 확인 후 24시간 내 연락드려요</p>
-      <a href="index.html" class="next-btn" style="display:block;text-decoration:none;box-sizing:border-box;">처음으로 돌아가기</a>
-    </div>
-  </div>
-</div>
+      <div class="notice">
+        <b>단지 단위 상담은 비용이 발생하지 않습니다.</b>
+        협의회 운영에 관한 일반적인 문의는 무료로 안내해 드리며,
+        소송이나 등기 등 사건 수임이 필요한 경우에만 별도로 안내드립니다.
+      </div>
 
-<script>
-const fieldExperts = {
-  '법률':'이지훈 변호사 · 법무법인 제이엘 · 공동주택 전문',
-  '교육':'최민준 교육컨설턴트 · 입시·학군 전문',
-  '세무회계':'하혜용 세무사 · 관리비 회계 전문'
-};
-let selected = null;
-document.querySelectorAll('.field-card').forEach(c=>{
-  c.addEventListener('click', ()=>{
-    document.querySelectorAll('.field-card').forEach(x=>x.classList.remove('active'));
-    c.classList.add('active');
-    selected = c.dataset.field;
-    document.getElementById('next1').disabled = false;
-  });
-});
-function goStep(n){
-  document.querySelectorAll('.step-view').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step'+n).classList.add('active');
-  document.getElementById('pg'+n).classList.add('done');
-  if(n===2 && selected){
-    const [name, ...rest] = fieldExperts[selected].split(' · ');
-    document.getElementById('matched-name').textContent = name;
-    document.getElementById('matched-field-text').textContent = selected+' 분야 기준으로 자동 매칭됐어요';
-  }
-}
-</script>
+      <form class="cf" data-concierge novalidate>
+        <div class="cf__row">
+          <div class="cf__fld">
+            <label for="cComplex">단지명 <span class="req">필수</span></label>
+            <input type="text" id="cComplex" placeholder="예) OO아파트 1단지">
+          </div>
+          <div class="cf__fld">
+            <label for="cUnits">세대수</label>
+            <input type="text" id="cUnits" placeholder="예) 1,200세대">
+          </div>
+        </div>
+
+        <div class="cf__row">
+          <div class="cf__fld">
+            <label for="cName">성함 <span class="req">필수</span></label>
+            <input type="text" id="cName" placeholder="홍길동">
+          </div>
+          <div class="cf__fld">
+            <label for="cRole">직책</label>
+            <select id="cRole">
+              <option value="">선택하지 않음</option>
+              <option value="회장">회장</option>
+              <option value="부회장">부회장</option>
+              <option value="총무">총무</option>
+              <option value="감사">감사</option>
+              <option value="임원">임원</option>
+              <option value="발기인">발기인</option>
+              <option value="입주예정자">입주예정자</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cf__row">
+          <div class="cf__fld">
+            <label for="cTel">연락처 <span class="req">필수</span></label>
+            <input type="tel" id="cTel" placeholder="010-0000-0000">
+          </div>
+          <div class="cf__fld">
+            <label for="cStage">현재 단계</label>
+            <select id="cStage">
+              <option value="">선택하지 않음</option>
+              <option value="협의회 결성 전">협의회 결성 전</option>
+              <option value="결성 진행 중">결성 진행 중</option>
+              <option value="결성 완료 · 운영 중">결성 완료 · 운영 중</option>
+              <option value="사전점검 준비">사전점검 준비</option>
+              <option value="입주 · 등기 준비">입주 · 등기 준비</option>
+              <option value="입대의 인계 준비">입대의 인계 준비</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cf__fld">
+          <label for="cBody">상담 내용 <span class="req">필수</span></label>
+          <textarea id="cBody" placeholder="어떤 상황인지 시간 순서대로 적어주세요.&#10;시행사·시공사로부터 받은 공문이 있다면 그 명칭과 날짜도 함께 적어주시면 정확한 답변이 가능합니다."></textarea>
+          <p class="cf__hint">단지명·세대수·현재 단계가 있으면 첫 통화에서 바로 실질적인 안내가 가능합니다.</p>
+        </div>
+
+        <label class="cf__chk">
+          <input type="checkbox" id="cAgree">
+          <span>
+            <b>개인정보 수집·이용에 동의합니다.</b>
+            수집 항목은 단지명·성함·직책·연락처와 상담 내용이며, 상담 회신에만 사용합니다.
+            수임에 이르지 않은 상담 기록은 6개월 후 파기합니다.
+            자세한 내용은
+            <a href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/privacy.html" target="_blank" rel="noopener">법무법인 제이엘 개인정보처리방침</a>을
+            확인해 주세요.
+          </span>
+        </label>
+
+        <div class="notice" style="margin-top:18px">
+          이 신청은 별도 서버에 저장되지 않습니다. <b>상담 신청</b>을 누르면 작성하신 내용이
+          정리되어 메일 프로그램에서 열리며, 보내기를 누르셔야 접수가 완료됩니다.
+          메일이 열리지 않으면 <b>내용 복사</b> 후
+          <a href="mailto:jllaw2020@naver.com">jllaw2020@naver.com</a> 으로 보내주세요.
+          급하시면 전화가 가장 빠릅니다.
+        </div>
+
+        <div class="btn-row" style="margin-top:24px">
+          <button type="submit" class="btn btn--fill">상담 신청 →</button>
+          <button type="button" class="btn" data-concierge-copy>내용 복사</button>
+          <a class="btn" href="tel:18994252">전화 1899-4252</a>
+        </div>
+
+        <p class="cf__msg" data-concierge-msg role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
 
 <footer class="aff">
   <div class="wrap">
@@ -151,9 +165,7 @@ function goStep(n){
         <a href="lifecycle-guide.html">단계별 안내</a>
         <a href="poa-system.html">위임장 접수</a>
         <a href="document-center.html">서식 생성</a>
-        <a href="tools.html">실무 도구</a>
         <a href="resources.html">자료실</a>
-        <a href="contents.html">운영 자료</a>
         <a href="handover-checklist.html">인계 체크리스트</a>
         <a href="concierge-request.html">상담 신청</a>
       </nav>
@@ -165,12 +177,84 @@ function goStep(n){
       <a href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/" target="_blank" rel="noopener">법무법인 제이엘 ↗</a>
     </div>
     <p class="aff__copy">
-      이 사이트가 제공하는 서식과 계산 결과는 일반적인 안내이며 구체적 사건의 법률자문을 대신하지 않습니다.
+      이 사이트가 제공하는 서식과 안내는 일반적인 정보이며 구체적 사건의 법률자문을 대신하지 않습니다.
       © JL LAW FIRM. All rights reserved.
     </p>
   </div>
 </footer>
 
 <script src="assets/js/app.js"></script>
+<script>
+/* 상담 신청 — 외부 서버를 거치지 않고 메일 앱으로 넘긴다.
+   상담 내용에는 단지 사정이 담기므로 제3자 서비스를 경유하지 않는다. */
+(function () {
+  'use strict';
+  var form = document.querySelector('[data-concierge]');
+  if (!form) return;
+  var TO = 'jllaw2020@naver.com';
+
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function say(msg, kind) {
+    var el = form.querySelector('[data-concierge-msg]');
+    el.textContent = msg;
+    el.className = 'cf__msg' + (kind ? ' is-' + kind : '');
+  }
+
+  function check() {
+    var need = [['cComplex', '단지명을 입력해 주세요.'],
+                ['cName', '성함을 입력해 주세요.'],
+                ['cTel', '연락처를 입력해 주세요.'],
+                ['cBody', '상담 내용을 입력해 주세요.']];
+    for (var i = 0; i < need.length; i++) {
+      if (!val(need[i][0])) {
+        say(need[i][1], 'bad');
+        document.getElementById(need[i][0]).focus();
+        return false;
+      }
+    }
+    if (!document.getElementById('cAgree').checked) {
+      say('개인정보 수집·이용에 동의해 주셔야 접수됩니다.', 'bad');
+      document.getElementById('cAgree').focus();
+      return false;
+    }
+    return true;
+  }
+
+  function body() {
+    var lines = [
+      '[아파트친구 · 협의회 상담 신청]',
+      '단지명   : ' + val('cComplex') + (val('cUnits') ? ' (' + val('cUnits') + ')' : ''),
+      '신청인   : ' + val('cName') + (val('cRole') ? ' · ' + val('cRole') : ''),
+      '연락처   : ' + val('cTel')
+    ];
+    if (val('cStage')) lines.push('현재단계 : ' + val('cStage'));
+    lines.push('', '[상담 내용]', val('cBody'), '', '— 개인정보 수집·이용에 동의함');
+    return lines.join('\n');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!check()) return;
+    var url = 'mailto:' + TO +
+      '?subject=' + encodeURIComponent('[협의회 상담] ' + val('cComplex') + ' · ' + val('cName')) +
+      '&body=' + encodeURIComponent(body());
+    if (url.length > 1800) { say('내용이 길어 "내용 복사"로 보내주세요.', 'bad'); return; }
+    window.location.href = url;
+    say('메일 프로그램을 열었습니다. 보내기를 누르셔야 접수가 완료됩니다.', 'ok');
+  });
+
+  form.querySelector('[data-concierge-copy]').addEventListener('click', function () {
+    if (!check()) return;
+    var text = body() + '\n\n받는 곳: ' + TO;
+    function done(ok) {
+      say(ok ? '복사했습니다. ' + TO + ' 으로 붙여넣어 보내주세요.'
+             : '복사하지 못했습니다. 내용을 직접 선택해 복사해 주세요.', ok ? 'ok' : 'bad');
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else { done(false); }
+  });
+})();
+</script>
 </body>
 </html>

@@ -157,3 +157,10 @@ a.card:hover { transform: translateY(-5px); box-shadow: 0 20px 44px rgba(13, 33,
   .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; }
   .btn { width: 100%; }
 }
+
+/* 아직 준비되지 않은 항목 — 눌리는 것처럼 보이지 않게 */
+.dl-btn.is-soon {
+  display: inline-block; padding: 7px 14px; font-size: 12.5px; font-weight: 600;
+  color: var(--ink-dim); background: var(--bg-card); border: 1px solid var(--line);
+  cursor: default;
+}

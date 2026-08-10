@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>단체등기 접수 | 아파트친구</title>
+<meta name="description" content="입주 아파트 단체 소유권이전등기 접수. 단지 단위로 진행하며 아파트명과 연락처만 남기면 법무법인 제이엘 담당 변호사가 절차·일정·비용을 안내합니다.">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+  .gr { max-width: 720px; }
+  .gr__grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+  .gr__fld > label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; color: var(--navy); }
+  .gr__fld .req { margin-left: 5px; padding: 2px 7px; font-size: 11px; font-weight: 700; color: var(--gold); background: rgba(176,141,79,.12); }
+  .gr__fld input, .gr__fld select {
+    width: 100%; padding: 13px 15px; font: inherit; font-size: 15px; color: var(--ink);
+    border: 1px solid var(--line); background: #fff;
+  }
+  .gr__fld input:focus, .gr__fld select:focus { outline: 0; border-color: var(--navy); }
+  .gr__chk { display: flex; gap: 10px; align-items: flex-start; margin-top: 22px; padding: 16px 18px; background: var(--bg-card); font-size: 13.5px; line-height: 1.7; }
+  .gr__chk input { margin-top: 4px; flex: 0 0 auto; width: 17px; height: 17px; accent-color: var(--navy); }
+  .gr__chk a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+  .gr__msg { margin-top: 14px; min-height: 22px; font-size: 14px; font-weight: 600; }
+  .gr__msg.is-bad { color: #a3312a; }
+  .gr__msg.is-ok { color: #1d6b3a; }
+
+  .flow { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-top: 26px; }
+  .flow__i { padding: 18px 18px 20px; border: 1px solid var(--line); }
+  .flow__n { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; color: var(--gold); }
+  .flow__i h3 { margin-top: 8px; font-size: 15px; }
+  .flow__i p { margin-top: 6px; font-size: 13px; color: var(--ink-dim); word-break: keep-all; }
+
+  @media (max-width: 720px) { .gr__grid { grid-template-columns: 1fr; } .flow { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 460px) { .flow { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="afh">
+  <div class="wrap afh__in">
+    <a class="afh__logo" href="index.html">아파트친구<span>APT FRIEND</span></a>
+    <nav class="afh__nav" aria-label="주메뉴">
+      <a href="lifecycle-guide.html">단계별 안내</a>
+      <a href="group-registration.html" aria-current="page">단체등기 접수</a>
+      <a href="poa-system.html">위임장 접수</a>
+      <a href="document-center.html">서식 생성</a>
+      <a href="concierge-request.html">상담 신청</a>
+    </nav>
+    <a class="afh__cta" href="tel:18994252">1899-4252</a>
+    <button class="afh__toggle" type="button" data-af-toggle aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">GROUP REGISTRATION</p>
+        <h2>단체등기, 단지 단위로 접수합니다</h2>
+        <p>
+          입주 아파트의 소유권이전등기는 세대별로 따로 하는 것보다 단지 단위로 묶는 편이
+          비용과 일정 모두 유리합니다. 아파트명과 연락처만 남겨주시면
+          법무법인 제이엘 담당 변호사가 직접 연락드려 절차·일정·비용 구조를 안내합니다.
+        </p>
+      </div>
+
+      <div class="notice">
+        <b>협의회가 아직 없어도 접수됩니다.</b>
+        결성 준비 단계에서 미리 상담해 두면 일정을 앞당길 수 있습니다.
+        협의회 결성 자체가 필요하시면 <a href="start-association.html">협의회 시작하기</a>를 함께 보세요.
+      </div>
+
+      <form class="gr" data-group novalidate>
+        <div class="gr__grid">
+          <div class="gr__fld">
+            <label for="gComplex">아파트명 <span class="req">필수</span></label>
+            <input type="text" id="gComplex" placeholder="예) OO아파트 (OO시)">
+          </div>
+          <div class="gr__fld">
+            <label for="gName">성함 <span class="req">필수</span></label>
+            <input type="text" id="gName" autocomplete="name" placeholder="홍길동">
+          </div>
+          <div class="gr__fld">
+            <label for="gRole">직책</label>
+            <select id="gRole">
+              <option value="">선택 안 함</option>
+              <option value="협의회 회장">협의회 회장</option>
+              <option value="부회장">부회장</option>
+              <option value="총무">총무</option>
+              <option value="임원">임원</option>
+              <option value="발기인">발기인 (협의회 준비 중)</option>
+              <option value="입주예정자">입주예정자</option>
+            </select>
+          </div>
+          <div class="gr__fld">
+            <label for="gTel">연락처 <span class="req">필수</span></label>
+            <input type="tel" id="gTel" autocomplete="tel" placeholder="010-0000-0000">
+          </div>
+        </div>
+
+        <label class="gr__chk">
+          <input type="checkbox" id="gAgree">
+          <span>
+            <b>개인정보 수집·이용에 동의합니다.</b>
+            수집 항목은 아파트명·성함·직책·연락처이며 상담 연락에만 사용합니다.
+            수임에 이르지 않은 상담 기록은 6개월 후 파기합니다.
+            자세한 내용은
+            <a href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/privacy.html" target="_blank" rel="noopener">법무법인 제이엘 개인정보처리방침</a>을
+            확인해 주세요.
+          </span>
+        </label>
+
+        <div class="notice" style="margin-top:18px">
+          이 접수는 별도 서버에 저장되지 않습니다. <b>접수하기</b>를 누르면 작성하신 내용이
+          정리되어 메일 프로그램에서 열리며, 보내기를 누르셔야 접수가 완료됩니다.
+          메일이 열리지 않으면 <b>내용 복사</b> 후
+          <a href="mailto:jllaw2020@naver.com">jllaw2020@naver.com</a> 으로 보내주세요.
+          급하시면 전화가 가장 빠릅니다.
+        </div>
+
+        <div class="btn-row" style="margin-top:24px">
+          <button type="submit" class="btn btn--fill">접수하기 →</button>
+          <button type="button" class="btn" data-group-copy>내용 복사</button>
+          <a class="btn" href="tel:18994252">전화 1899-4252</a>
+        </div>
+
+        <p class="gr__msg" data-group-msg role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow">PROCESS</p>
+        <h2>접수 이후 이렇게 진행됩니다</h2>
+      </div>
+      <div class="flow">
+        <div class="flow__i">
+          <span class="flow__n">STEP 01</span>
+          <h3>담당 변호사 연락</h3>
+          <p>단지 상황을 듣고 일정과 비용 구조를 안내합니다. 비용은 발생하지 않습니다.</p>
+        </div>
+        <div class="flow__i">
+          <span class="flow__n">STEP 02</span>
+          <h3>설명회 · 위임 절차</h3>
+          <p>세대별 위임장과 서류를 모읍니다. 전자 접수 페이지를 함께 씁니다.</p>
+        </div>
+        <div class="flow__i">
+          <span class="flow__n">STEP 03</span>
+          <h3>등기 신청</h3>
+          <p>취득세 납부와 채권 매입을 거쳐 관할 등기소에 일괄 신청합니다.</p>
+        </div>
+        <div class="flow__i">
+          <span class="flow__n">STEP 04</span>
+          <h3>완료 · 등기필정보 교부</h3>
+          <p>세대별 진행 상황은 등기센터에서 조회할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:30px;justify-content:center">
+        <a class="btn" href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/dongtan.html#calc" target="_blank" rel="noopener">등기비용 계산기 ↗</a>
+        <a class="btn" href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/dongtan.html#track" target="_blank" rel="noopener">진행 조회 ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="aff">
+  <div class="wrap">
+    <div class="aff__top">
+      <div class="aff__brand">
+        <strong>아파트친구</strong>
+        <p>입주예정자협의회가 처음부터 끝까지 막히지 않도록 돕는 컨시어지 서비스입니다.</p>
+      </div>
+      <nav class="aff__nav" aria-label="하단메뉴">
+        <a href="lifecycle-guide.html">단계별 안내</a>
+        <a href="group-registration.html">단체등기 접수</a>
+        <a href="poa-system.html">위임장 접수</a>
+        <a href="document-center.html">서식 생성</a>
+        <a href="resources.html">자료실</a>
+        <a href="handover-checklist.html">인계 체크리스트</a>
+        <a href="concierge-request.html">상담 신청</a>
+      </nav>
+    </div>
+    <div class="aff__jl">
+      <span>운영 — <b>법무법인 제이엘</b></span>
+      <span>대표번호 1899-4252</span>
+      <a href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/" target="_blank" rel="noopener">법무법인 제이엘 ↗</a>
+    </div>
+    <p class="aff__copy">
+      이 사이트가 제공하는 서식과 안내는 일반적인 정보이며 구체적 사건의 법률자문을 대신하지 않습니다.
+      © JL LAW FIRM. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+<script>
+/* 단체등기 접수 — 외부 서버를 거치지 않고 메일 앱으로 넘긴다.
+   단지 사정과 연락처가 담기므로 제3자 서비스를 경유하지 않는다. */
+(function () {
+  'use strict';
+  var form = document.querySelector('[data-group]');
+  if (!form) return;
+  var TO = 'jllaw2020@naver.com';
+
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function say(msg, kind) {
+    var el = form.querySelector('[data-group-msg]');
+    el.textContent = msg;
+    el.className = 'gr__msg' + (kind ? ' is-' + kind : '');
+  }
+
+  function check() {
+    var need = [['gComplex', '아파트명을 입력해 주세요.'],
+                ['gName', '성함을 입력해 주세요.'],
+                ['gTel', '연락처를 입력해 주세요.']];
+    for (var i = 0; i < need.length; i++) {
+      if (!val(need[i][0])) {
+        say(need[i][1], 'bad');
+        document.getElementById(need[i][0]).focus();
+        return false;
+      }
+    }
+    if (!document.getElementById('gAgree').checked) {
+      say('개인정보 수집·이용에 동의해 주셔야 접수됩니다.', 'bad');
+      document.getElementById('gAgree').focus();
+      return false;
+    }
+    return true;
+  }
+
+  function body() {
+    return [
+      '[아파트친구 · 단체등기 접수]',
+      '아파트명 : ' + val('gComplex'),
+      '신청인   : ' + val('gName') + (val('gRole') ? ' · ' + val('gRole') : ''),
+      '연락처   : ' + val('gTel'),
+      '',
+      '— 개인정보 수집·이용에 동의함'
+    ].join('\n');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!check()) return;
+    window.location.href = 'mailto:' + TO +
+      '?subject=' + encodeURIComponent('[단체등기 접수] ' + val('gComplex') + ' · ' + val('gName')) +
+      '&body=' + encodeURIComponent(body());
+    say('메일 프로그램을 열었습니다. 보내기를 누르셔야 접수가 완료됩니다.', 'ok');
+  });
+
+  form.querySelector('[data-group-copy]').addEventListener('click', function () {
+    if (!check()) return;
+    var text = body() + '\n\n받는 곳: ' + TO;
+    function done(ok) {
+      say(ok ? '복사했습니다. ' + TO + ' 으로 붙여넣어 보내주세요.'
+             : '복사하지 못했습니다. 내용을 직접 선택해 복사해 주세요.', ok ? 'ok' : 'bad');
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else { done(false); }
+  });
+})();
+</script>
+</body>
+</html>

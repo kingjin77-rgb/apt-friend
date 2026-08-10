@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>협의회 전 과정 26단계 | 아파트친구</title>
+<meta name="description" content="입주예정자협의회 발족부터 해체까지 26단계. 각 단계에서 법무법인이 무엇을 하는지, 협의회가 무엇을 준비해야 하는지 정리했습니다.">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+  /* 국면 — 26단계를 다섯 묶음으로 나눈다. 번호만 늘어놓으면 어디쯤인지 알 수 없다 */
+  .ph { margin-top: clamp(44px, 5vw, 72px); }
+  .ph:first-of-type { margin-top: clamp(30px, 3vw, 44px); }
+  .ph__head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 2px solid var(--navy); }
+  .ph__no { font-size: 12px; font-weight: 700; letter-spacing: .16em; color: var(--gold); }
+  .ph__head h2 { font-size: clamp(20px, 2.2vw, 27px); letter-spacing: -.035em; }
+  .ph__range { margin-left: auto; font-size: 12.5px; font-weight: 600; color: var(--ink-dim); letter-spacing: .02em; }
+  .ph__lead { margin-top: 14px; max-width: 70ch; font-size: 14.5px; color: var(--ink-dim); word-break: keep-all; }
+
+  .steps { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+  .step {
+    position: relative; display: flex; flex-direction: column;
+    padding: 20px 20px 22px; background: #fff; border: 1px solid var(--line);
+    transition: border-color .3s var(--ease), box-shadow .3s var(--ease), transform .3s var(--ease);
+  }
+  .step:hover { border-color: var(--navy); box-shadow: 0 14px 32px rgba(13,33,98,.09); transform: translateY(-2px); }
+  .step__n {
+    font-size: 25px; font-weight: 800; line-height: 1; letter-spacing: -.04em;
+    color: var(--line); transition: color .3s var(--ease);
+  }
+  .step:hover .step__n { color: var(--gold); }
+  .step h3 { margin-top: 10px; font-size: 16px; letter-spacing: -.035em; word-break: keep-all; }
+  .step p { margin-top: 8px; font-size: 13.5px; line-height: 1.7; color: var(--ink-dim); word-break: keep-all; }
+  .step__who {
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .tagj, .tagc {
+    padding: 3px 9px; font-size: 11.5px; font-weight: 700; letter-spacing: -.01em; white-space: nowrap;
+  }
+  /* 법무법인이 직접 하는 일 / 협의회가 해야 하는 일 — 색으로 구분한다 */
+  .tagj { color: var(--navy); background: rgba(13,33,98,.08); }
+  .tagc { color: #8a6a2f; background: rgba(176,141,79,.14); }
+  .step__link { margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--navy); }
+  .step__link::after { content: " →"; }
+
+  .legend { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 13px; color: var(--ink-dim); }
+  .legend b { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; }
+  .legend i { width: 11px; height: 11px; display: inline-block; }
+  .legend .j { background: rgba(13,33,98,.35); }
+  .legend .c { background: rgba(176,141,79,.5); }
+
+  @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } .ph__range { margin-left: 0; width: 100%; } }
+</style>
+</head>
+<body>
+
+<header class="afh">
+  <div class="wrap afh__in">
+    <a class="afh__logo" href="index.html">아파트친구<span>APT FRIEND</span></a>
+    <nav class="afh__nav" aria-label="주메뉴">
+      <a href="roadmap.html" aria-current="page">전 과정 26단계</a>
+      <a href="lifecycle-guide.html">단계별 안내</a>
+      <a href="group-registration.html">단체등기 접수</a>
+      <a href="poa-system.html">위임장 접수</a>
+      <a href="document-center.html">서식 생성</a>
+    </nav>
+    <a class="afh__cta" href="concierge-request.html">무료 상담</a>
+    <button class="afh__toggle" type="button" data-af-toggle aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">FULL ROADMAP</p>
+      <h1 style="margin-top:12px;font-size:clamp(25px,3.6vw,40px);font-weight:800">
+        협의회 발족부터 해체까지, 26단계
+      </h1>
+      <p style="margin-top:16px;max-width:62ch;font-size:clamp(15px,1.5vw,17px);color:var(--ink-dim)">
+        입주예정자협의회는 길게는 3년, 짧아도 1년 반을 움직입니다. 그동안 무엇을 언제 해야 하는지
+        전체 지도를 갖고 있는 협의회와 그렇지 않은 협의회는 결과가 다릅니다.
+        각 단계에서 법무법인이 맡는 일과 협의회가 준비할 일을 나눠 적었습니다.
+      </p>
+
+      <div class="legend">
+        <b><i class="j"></i>법무법인 제이엘이 수행</b>
+        <b><i class="c"></i>협의회가 준비 · 결정</b>
+      </div>
+
+      <!-- 1국면 -->
+      <div class="ph">
+        <div class="ph__head">
+          <span class="ph__no">PHASE 01</span>
+          <h2>조직 만들기</h2>
+          <span class="ph__range">01 – 04</span>
+        </div>
+        <p class="ph__lead">
+          대표성과 자금 관리 권한을 갖춘 조직을 먼저 세웁니다. 이 단계가 부실하면
+          이후 모든 결의와 계약의 효력이 흔들립니다.
+        </p>
+        <div class="steps">
+          <article class="step">
+            <span class="step__n">01</span>
+            <h3>협의회 발족</h3>
+            <p>발기인을 모아 회칙을 만들고 창립총회에서 임원을 선출합니다. 대표권과 계좌관리권을 회칙에 반드시 넣습니다.</p>
+            <div class="step__who"><span class="tagj">회칙 검토</span><span class="tagc">발기인 모집</span></div>
+            <a class="step__link" href="start-association.html">협의회 시작하기</a>
+          </article>
+          <article class="step">
+            <span class="step__n">02</span>
+            <h3>고유번호증 발급 · 통장 개설</h3>
+            <p>세무서에서 고유번호증을 받아 협의회 명의 계좌를 엽니다. 개인 명의 계좌는 회계 분쟁의 시작점입니다.</p>
+            <div class="step__who"><span class="tagj">서류 작성 지원</span><span class="tagc">세무서 · 은행 방문</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">03</span>
+            <h3>위임장 징구</h3>
+            <p>세대별 의결권 위임을 받습니다. 참석과 위임을 합한 수가 회칙 정족수를 넘어야 총회가 성립합니다.</p>
+            <div class="step__who"><span class="tagj">양식 · 적법성 검토</span><span class="tagc">세대 접수</span></div>
+            <a class="step__link" href="poa-system.html">전자 접수 만들기</a>
+          </article>
+          <article class="step">
+            <span class="step__n">04</span>
+            <h3>법무법인 · 주관사 선정</h3>
+            <p>총회 결의로 자문 법무법인과 주관사를 정합니다. 계약서에 업무 범위와 비용 정산 방식을 명시합니다.</p>
+            <div class="step__who"><span class="tagj">계약서 검토</span><span class="tagc">총회 결의</span></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 2국면 -->
+      <div class="ph">
+        <div class="ph__head">
+          <span class="ph__no">PHASE 02</span>
+          <h2>자료 확보와 분석</h2>
+          <span class="ph__range">05 – 07</span>
+        </div>
+        <p class="ph__lead">
+          협상은 자료에서 갈립니다. 도면과 공정 자료를 확보해 분양 당시 약속과 실제 시공을
+          대조해 두어야 뒤에 나올 요구가 근거를 갖습니다.
+        </p>
+        <div class="steps">
+          <article class="step">
+            <span class="step__n">05</span>
+            <h3>도면 정보공개청구</h3>
+            <p>인허가 관청에 사업계획승인 도면을 청구합니다. 분양 홍보물이 아니라 승인 도면이 기준입니다.</p>
+            <div class="step__who"><span class="tagj">청구서 작성 · 이의신청</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">06</span>
+            <h3>공정율 확인</h3>
+            <p>현재 공정이 어디까지 왔는지 확인합니다. 요구 시점을 놓치면 바꿀 수 없는 항목이 생깁니다.</p>
+            <div class="step__who"><span class="tagj">자료 요구</span><span class="tagc">현장 확인</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">07</span>
+            <h3>도면 분석</h3>
+            <p>승인 도면과 분양 당시 안내 내용을 대조해 차이를 찾습니다. 이 목록이 이후 협상의 뼈대가 됩니다.</p>
+            <div class="step__who"><span class="tagj">분석 보고서</span></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 3국면 -->
+      <div class="ph">
+        <div class="ph__head">
+          <span class="ph__no">PHASE 03</span>
+          <h2>사업주체와의 협상</h2>
+          <span class="ph__range">08 – 13</span>
+        </div>
+        <p class="ph__lead">
+          정기적으로 만나 기록을 남기는 것이 핵심입니다. 구두 약속은 나중에 남지 않습니다.
+          협상이 막히면 압박 수단을 쓰되, 적법한 범위 안에서 해야 합니다.
+        </p>
+        <div class="steps">
+          <article class="step">
+            <span class="step__n">08</span>
+            <h3>사업주체 상견례</h3>
+            <p>협의회 대표성을 공식 인정받는 자리입니다. 회칙·임원명단·총회 회의록을 함께 제출합니다.</p>
+            <div class="step__who"><span class="tagj">대표성 소명</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">09</span>
+            <h3>정기 미팅 · 주거환경 개선</h3>
+            <p>월 단위로 만나 요구사항을 문서로 주고받습니다. 회의록에 합의·미합의를 명확히 남깁니다.</p>
+            <div class="step__who"><span class="tagj">회의 참석 · 회의록</span><span class="tagc">요구안 정리</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">10</span>
+            <h3>현장 점검 (암행)</h3>
+            <p>사전 통보 없이 시공 상태를 확인합니다. 정돈된 현장만 보면 실제를 알 수 없습니다.</p>
+            <div class="step__who"><span class="tagc">점검단 구성</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">11</span>
+            <h3>협상 불발 시 대응</h3>
+            <p>집회·시위는 적법 절차를 지켜야 합니다. 신고 없이 하거나 표현이 지나치면 오히려 책임을 집니다.</p>
+            <div class="step__who"><span class="tagj">적법성 검토 · 공문</span><span class="tagc">신고 · 진행</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">12</span>
+            <h3>조경 설명회</h3>
+            <p>조경은 준공 후 바꾸기가 가장 어렵습니다. 수목 규격과 배치를 도면 단계에서 확인합니다.</p>
+            <div class="step__who"><span class="tagj">약속 사항 기록</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">13</span>
+            <h3>입주 설명회</h3>
+            <p>입주 일정·잔금·관리 방식이 공표됩니다. 여기서 나온 내용은 문서로 받아 두어야 합니다.</p>
+            <div class="step__who"><span class="tagj">배포 자료 검토</span></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 4국면 -->
+      <div class="ph">
+        <div class="ph__head">
+          <span class="ph__no">PHASE 04</span>
+          <h2>점검과 입주</h2>
+          <span class="ph__range">14 – 21</span>
+        </div>
+        <p class="ph__lead">
+          하자는 사전점검에서 기록한 만큼만 남습니다. 이 시기의 서류와 사진이
+          몇 년 뒤 하자소송의 증거가 됩니다.
+        </p>
+        <div class="steps">
+          <article class="step">
+            <span class="step__n">14</span>
+            <h3>사전점검</h3>
+            <p>세대 내부를 확인하고 하자를 기록합니다. 날짜가 보이게 사진을 남기고 접수증을 보관합니다.</p>
+            <div class="step__who"><span class="tagj">체크리스트 제공</span><span class="tagc">세대별 점검</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">15</span>
+            <h3>공용부 점검</h3>
+            <p>지하주차장·옥상·기계실 등은 세대 점검에서 빠집니다. 별도 인원을 두어 확인합니다.</p>
+            <div class="step__who"><span class="tagj">점검 항목 정리</span><span class="tagc">점검단 운영</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">16</span>
+            <h3>은행 연계 · 선정</h3>
+            <p>잔금대출 취급 은행을 비교해 조건을 받습니다. 단지 단위로 협상하면 조건이 달라집니다.</p>
+            <div class="step__who"><span class="tagc">조건 비교 · 선정</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">17</span>
+            <h3>잔금대출 상담</h3>
+            <p>세대별 상황에 맞는 한도와 금리를 안내받는 자리를 엽니다.</p>
+            <div class="step__who"><span class="tagc">설명회 운영</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">18</span>
+            <h3>관리규약 확인</h3>
+            <p>사업주체가 제안한 관리규약안을 검토합니다. 한 번 정해지면 바꾸기 어렵습니다.</p>
+            <div class="step__who"><span class="tagj">조항 검토</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">19</span>
+            <h3>입주</h3>
+            <p>잔금을 내고 열쇠를 받습니다. 미보수 하자가 있으면 인수 시점에 서면으로 남깁니다.</p>
+            <div class="step__who"><span class="tagc">세대별 진행</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">20</span>
+            <h3>서류 수령</h3>
+            <p>등기에 필요한 서류를 사업주체로부터 받습니다. 누락되면 등기가 그만큼 늦어집니다.</p>
+            <div class="step__who"><span class="tagj">목록 대조</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">21</span>
+            <h3>취득세 신고</h3>
+            <p>잔금일부터 60일 안에 신고·납부해야 가산세가 붙지 않습니다.</p>
+            <div class="step__who"><span class="tagj">신고 대행</span></div>
+            <a class="step__link" href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/dongtan.html#calc" target="_blank" rel="noopener">등기비용 계산기</a>
+          </article>
+        </div>
+      </div>
+
+      <!-- 5국면 -->
+      <div class="ph">
+        <div class="ph__head">
+          <span class="ph__no">PHASE 05</span>
+          <h2>인계와 마무리</h2>
+          <span class="ph__range">22 – 26</span>
+        </div>
+        <p class="ph__lead">
+          협의회는 입주자대표회의로 역할을 넘기고 해체합니다. 넘길 것을 정리하지 않은 채
+          해체하면 남은 자금과 자료의 책임이 개인에게 돌아옵니다.
+        </p>
+        <div class="steps">
+          <article class="step">
+            <span class="step__n">22</span>
+            <h3>선거관리위원회 구성</h3>
+            <p>입주 50%를 넘으면 선관위를 꾸립니다. 동별대표자 선출의 적법성이 여기서 정해집니다.</p>
+            <div class="step__who"><span class="tagj">규정 검토</span><span class="tagc">위원 위촉</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">23</span>
+            <h3>입주자대표회의 구성</h3>
+            <p>동별대표자를 뽑아 입대의를 만듭니다. 협의회와 병존하는 기간에는 권한 범위를 정리해 둡니다.</p>
+            <div class="step__who"><span class="tagj">절차 자문</span><span class="tagc">선출 진행</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">24</span>
+            <h3>협의회 해체</h3>
+            <p>총회 결의로 해산하고 잔여 자금·자료를 입대의에 넘깁니다. 결산 보고와 인계서를 남깁니다.</p>
+            <div class="step__who"><span class="tagj">인계 서류</span><span class="tagc">결산 · 총회</span></div>
+            <a class="step__link" href="handover-checklist.html">인계 체크리스트</a>
+          </article>
+          <article class="step">
+            <span class="step__n">25</span>
+            <h3>사업주체 보존등기</h3>
+            <p>사업주체 명의 보존등기가 되어야 세대별 소유권이전등기를 진행할 수 있습니다.</p>
+            <div class="step__who"><span class="tagj">일정 확인</span></div>
+          </article>
+          <article class="step">
+            <span class="step__n">26</span>
+            <h3>등기권리증 배부 · 채권 환급</h3>
+            <p>등기필정보를 세대에 나눠주고, 매입한 국민주택채권의 환급을 정산합니다.</p>
+            <div class="step__who"><span class="tagj">배부 · 환급 정산</span></div>
+            <a class="step__link" href="group-registration.html">단체등기 접수</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow">NEXT</p>
+        <h2>지금 어느 단계인가요?</h2>
+        <p>단계를 알려주시면 그 시점에 필요한 것부터 안내해 드립니다.</p>
+      </div>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--fill" href="concierge-request.html">현재 단계로 상담 신청 →</a>
+        <a class="btn" href="group-registration.html">단체등기 접수</a>
+        <a class="btn" href="tel:18994252">전화 1899-4252</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="aff">
+  <div class="wrap">
+    <div class="aff__top">
+      <div class="aff__brand">
+        <strong>아파트친구</strong>
+        <p>입주예정자협의회가 처음부터 끝까지 막히지 않도록 돕습니다.</p>
+      </div>
+      <nav class="aff__nav" aria-label="하단메뉴">
+        <a href="roadmap.html">전 과정 26단계</a>
+        <a href="lifecycle-guide.html">단계별 안내</a>
+        <a href="group-registration.html">단체등기 접수</a>
+        <a href="poa-system.html">위임장 접수</a>
+        <a href="document-center.html">서식 생성</a>
+        <a href="resources.html">자료실</a>
+        <a href="handover-checklist.html">인계 체크리스트</a>
+        <a href="concierge-request.html">상담 신청</a>
+      </nav>
+    </div>
+    <div class="aff__jl">
+      <span>운영 — <b>법무법인 제이엘</b></span>
+      <span>대표번호 1899-4252</span>
+      <a href="https://kingjin77-rgb.github.io/jl-lawfirm-homepage/" target="_blank" rel="noopener">법무법인 제이엘 ↗</a>
+    </div>
+    <p class="aff__copy">
+      이 사이트가 제공하는 서식과 안내는 일반적인 정보이며 구체적 사건의 법률자문을 대신하지 않습니다.
+      © JL LAW FIRM. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

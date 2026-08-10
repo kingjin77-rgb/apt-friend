@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kingjin77-rgb.github.io/apt-friend/sitemap.xml

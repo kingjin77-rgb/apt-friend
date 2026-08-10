@@ -1,0 +1,21 @@
+name: 사이트 점검
+
+# 파일이 바뀐 PR에서 기본적인 실수를 잡는다.
+# - 사이트 내부 링크 깨짐
+# - 참조하는 이미지·문서 파일 누락
+# - 구조화 데이터 JSON 문법 오류
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 점검
+        run: python tools/check.py

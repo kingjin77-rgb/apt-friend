@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>위임장 접수 시스템 | 아파트친구</title>
+<title>위임장 전자접수 | 아파트친구</title>
+<meta name="description" content="총회 불참 세대의 의결권 위임장을 온라인으로 받습니다. 단지별 접수 페이지를 만들고 세대별 접수 현황을 확인할 수 있습니다.">
 <link rel="stylesheet" href="assets/css/app.css">
 <style>
   :root{--bg:#FFFFFF;--card:var(--bg-card);--ink:var(--ink);--ink-dim:var(--ink-dim);--accent:var(--navy);--line:var(--line);
@@ -36,6 +37,8 @@
 
   .channel-row{display:flex;gap:10px;margin-bottom:20px;}
   .channel-btn{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:14px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:700;}
+  /* 주소를 넣기 전에는 눌리지 않는다. 동작하지 않는 버튼은 두지 않는다. */
+  .channel-btn.is-off{color:var(--ink-dim);background:var(--bg-card);cursor:default;font-weight:600;}
 
   /* 위임장 폼 */
   fieldset{border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;}
@@ -71,6 +74,91 @@
 
   .settings-note{background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--ink-dim);margin-bottom:16px;}
 </style>
+<!-- SEO:AUTO -->
+<link rel="canonical" href="https://kingjin77-rgb.github.io/apt-friend/poa-system.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="아파트친구">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://kingjin77-rgb.github.io/apt-friend/poa-system.html">
+<meta property="og:title" content="위임장 전자접수 | 아파트친구">
+<meta property="og:description" content="총회 불참 세대의 의결권 위임장을 온라인으로 받습니다. 단지별 접수 페이지를 만들고 세대별 접수 현황을 확인할 수 있습니다.">
+<meta property="og:image" content="https://kingjin77-rgb.github.io/apt-friend/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="위임장 전자접수 | 아파트친구">
+<meta name="twitter:description" content="총회 불참 세대의 의결권 위임장을 온라인으로 받습니다. 단지별 접수 페이지를 만들고 세대별 접수 현황을 확인할 수 있습니다.">
+<meta name="twitter:image" content="https://kingjin77-rgb.github.io/apt-friend/assets/img/og-default.png">
+<meta name="author" content="법무법인 제이엘">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://kingjin77-rgb.github.io/apt-friend/#website",
+      "url": "https://kingjin77-rgb.github.io/apt-friend/",
+      "name": "아파트친구",
+      "publisher": {
+        "@id": "https://kingjin77-rgb.github.io/apt-friend/#organization"
+      },
+      "inLanguage": "ko-KR"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://kingjin77-rgb.github.io/apt-friend/#organization",
+      "name": "아파트친구",
+      "alternateName": "APT FRIEND",
+      "url": "https://kingjin77-rgb.github.io/apt-friend/",
+      "image": "https://kingjin77-rgb.github.io/apt-friend/assets/img/og-default.png",
+      "email": "jllaw2020@naver.com",
+      "telephone": "+82-1899-4252",
+      "description": "입주예정자협의회의 결성과 운영을 돕는 지원센터입니다. 법무법인 제이엘이 운영합니다.",
+      "parentOrganization": {
+        "@type": "LegalService",
+        "name": "법무법인 제이엘",
+        "url": "https://kingjin77-rgb.github.io/jl-lawfirm-homepage/"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "대한민국"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://kingjin77-rgb.github.io/apt-friend/poa-system.html#webpage",
+      "url": "https://kingjin77-rgb.github.io/apt-friend/poa-system.html",
+      "name": "위임장 전자접수 | 아파트친구",
+      "description": "총회 불참 세대의 의결권 위임장을 온라인으로 받습니다. 단지별 접수 페이지를 만들고 세대별 접수 현황을 확인할 수 있습니다.",
+      "isPartOf": {
+        "@id": "https://kingjin77-rgb.github.io/apt-friend/#website"
+      },
+      "about": {
+        "@id": "https://kingjin77-rgb.github.io/apt-friend/#organization"
+      },
+      "inLanguage": "ko-KR"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "홈",
+          "item": "https://kingjin77-rgb.github.io/apt-friend/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "위임장 접수",
+          "item": "https://kingjin77-rgb.github.io/apt-friend/poa-system.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /SEO:AUTO -->
 </head>
 <body>
 
@@ -108,8 +196,8 @@
     </div>
 
     <div class="channel-row">
-      <a class="channel-btn" href="#" id="cafe-link">💚 카페 바로가기</a>
-      <a class="channel-btn" href="#" id="kakao-link">💬 오픈톡 바로가기</a>
+      <span class="channel-btn is-off" id="cafe-link">💚 카페 주소 미등록</span>
+      <span class="channel-btn is-off" id="kakao-link">💬 오픈톡 주소 미등록</span>
     </div>
 
     <button class="submit-btn" onclick="showTab('submit')">위임장 제출하러 가기 →</button>
@@ -309,17 +397,28 @@ function exportCSV(){
 }
 
 // ===== 파라메트릭 설정 =====
+function setChannel(id, url, onText, offText){
+  const el = document.getElementById(id);
+  const next = document.createElement(url ? 'a' : 'span');
+  next.className = 'channel-btn' + (url ? '' : ' is-off');
+  next.id = id;
+  next.textContent = url ? onText : offText;
+  if (url) { next.href = url; next.target = '_blank'; next.rel = 'noopener'; }
+  el.replaceWith(next);
+}
+
 function saveSettings(){
   const complex = document.getElementById('s-complex').value || '우리 단지';
   const units = parseInt(document.getElementById('s-units').value) || 1000;
-  const cafe = document.getElementById('s-cafe').value || '#';
-  const kakao = document.getElementById('s-kakao').value || '#';
+  const cafe = document.getElementById('s-cafe').value.trim();
+  const kakao = document.getElementById('s-kakao').value.trim();
   const color = document.getElementById('s-color').value || 'var(--navy)';
 
   document.getElementById('complex-name-display').textContent = complex;
   totalUnits = units;
-  document.getElementById('cafe-link').href = cafe;
-  document.getElementById('kakao-link').href = kakao;
+  // 주소를 넣기 전에는 눌리지 않는 안내로 두고, 넣으면 링크로 바꾼다
+  setChannel('cafe-link', cafe, '💚 카페 바로가기', '💚 카페 주소 미등록');
+  setChannel('kakao-link', kakao, '💬 오픈톡 바로가기', '💬 오픈톡 주소 미등록');
   document.documentElement.style.setProperty('--accent', color);
   updateDashboard();
   alert('설정이 저장됐어요');
